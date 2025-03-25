@@ -39,11 +39,3 @@ git clone https://github.com/your-username/portfolio.git
 cd portfolio
 npm install
 npm run dev
-
-Build for production:
-
-npm run build
-
-
-
-
