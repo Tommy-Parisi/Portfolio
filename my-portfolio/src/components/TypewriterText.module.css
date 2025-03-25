@@ -1,0 +1,23 @@
+.typewriter {
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 4px;
+    animation: blink 1s step-start infinite;
+    color: white;
+}
+
+@keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+

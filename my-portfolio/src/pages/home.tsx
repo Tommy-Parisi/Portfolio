@@ -1,4 +1,12 @@
+import TypewriterText from "../components/TypewriterText";
+
 export default function Home() {
-    return <h1>Home Page</h1>;
-  }
+  return (
+    <main>
+      <div>
+        <TypewriterText></TypewriterText>
+      </div>
+    </main>
+  );
+}
   
