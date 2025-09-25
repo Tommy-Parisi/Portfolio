@@ -184,7 +184,7 @@ const Timeline: React.FC = () => (
       <li>
         <div className="tdate">2025</div>
         <div className="tcontent">
-          <strong>SmartSort</strong> public MVP — Implemented HDBSCAN clustering for semantic file sorting.
+          <strong>SmartSort</strong> — Implemented HDBSCAN clustering for semantic file sorting.
           Built Svelte + Tauri desktop with Python backend.
         <div> 
         </div>

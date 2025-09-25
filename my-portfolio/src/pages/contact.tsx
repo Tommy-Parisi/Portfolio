@@ -1,310 +1,296 @@
-import React, { useMemo, useState } from "react";
-
-/**
- * ContactPage.tsx — Sleek, recruiter‑ready contact page (Vite + React, TS)
- * ------------------------------------------------------------------------
- * ✅ Self‑contained styles (no CSS framework required)
- * ✅ Accessible, keyboard‑friendly, responsive
- * ✅ Form with client‑side validation + graceful fallback (mailto)
- * ✅ Copy‑to‑clipboard for email, quick links, availability hint
- * ✅ Anti‑spam honeypot field (ignored by users/screen readers)
- *
- * Hook up the submit handler to your API or form service later.
- */
-
-// ------------------------------ Types --------------------------------------
-
-type SubmitState = "idle" | "submitting" | "success" | "error";
-
-// --------------------------- Helper Utils ----------------------------------
-
-
-function isEmail(v: string) {
-  // simple RFC‑ish check; replace with stronger logic if needed
-  return /.+@.+\..+/.test(v);
-}
-
-// ------------------------------- Page --------------------------------------
+import React, { useState } from "react";
 
 const ContactPage: React.FC = () => {
   return (
     <main className="contact-root">
       <Hero />
-      <ContactShell />
+      <ContactLinks />
       <style>{styles}</style>
     </main>
   );
 };
 
-// -------------------------------- Hero -------------------------------------
-
 const Hero: React.FC = () => (
   <header className="hero">
     <div className="hero-inner">
       <div className="eyebrow">Contact</div>
-      <h1>Let’s talk</h1>
+      <h1>Let's connect</h1>
       <p className="tagline">
-        I’m interested in contributing through a <strong>Software Engineering or Cybersecurity </strong>role,
+        I'm interested in contributing through a <strong>Software Engineering or Cybersecurity </strong>role,
         where I can build and ship impactful features, apply AI and ML, or help secure and protect critical systems.
         I bring experience developing production-ready tools and backend systems, as well as performing cybersecurity analysis, 
         research, and defense. I thrive in fast-paced, collaborative environments where I can bridge the gap between building innovative 
         technology and ensuring its security.
       </p>
       <p className="sub">
-        Please reach out. Let's build!
+        Reach out through any of the platforms below. Let's build!
       </p>
     </div>
   </header>
 );
 
-// --------------------------- Contact + Form --------------------------------
+const ContactLinks: React.FC = () => {
+  const [emailCopied, setEmailCopied] = useState(false);
+  const [phoneCopied, setPhoneCopied] = useState(false);
+  
+  const email = "tcparisi55@gmail.com";
+  const phone = "(302) 545-7734";
 
-const ContactShell: React.FC = () => {
-  const [email] = useState("tcparisi55@gmail.com"); 
-  const [copied, setCopied] = useState(false);
-
-  const copy = async () => {
+  const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    } catch {
+      // Ignore clipboard errors
+    }
+  };
+
+  const copyPhone = async () => {
+    try {
+      await navigator.clipboard.writeText(phone);
+      setPhoneCopied(true);
+      setTimeout(() => setPhoneCopied(false), 2000);
     } catch {
       // Ignore clipboard errors
     }
   };
 
   return (
-    <section className="contact" aria-label="Contact form and details">
-      <div className="left">
-        <h2>Send a message</h2>
-        <ContactForm toEmail={email} />
-      </div>
-
-      <aside className="right" aria-label="Direct contact and links">
-        <div className="panel">
-          <h3>Direct</h3>
-          <div className="direct">
-            <button className="button button--ghost" onClick={copy} aria-live="polite">
-              {copied ? "Copied ✓" : email}
-            </button>
-            <a
-              className="button"
-              href={`mailto:${email}?subject=${encodeURIComponent("Inquiry from portfolio")}`}
-            >
-              Email me
-            </a>
-            <a className="button button--ghost" href="/resume.pdf" target="_blank" rel="noreferrer">
-              Resume (PDF)
-            </a>
+    <section className="contact-section">
+      <div className="contact-grid">
+        
+        {/* Email */}
+        <div className="contact-card" onClick={copyEmail}>
+          <div className="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="contact-info">
+            <h3>Email</h3>
+            <p>{emailCopied ? "Copied!" : email}</p>
           </div>
         </div>
 
-        <div className="panel">
-          <h3>Links</h3>
-          <ul className="links">
-            <li>
-              <a href="https://github.com/Tommy-Parisi" target="_blank" rel="noreferrer">GitHub ↗</a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/thomas-parisi-771a76261/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
-            </li>
-            <li>
-              <a href="/Projects" rel="noreferrer">Projects →</a>
-            </li>
-            <li>
-              <a href="/About" rel="noreferrer">About →</a>
-            </li>
-          </ul>
+        {/* Phone */}
+        <div className="contact-card" onClick={copyPhone}>
+          <div className="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="contact-info">
+            <h3>Phone</h3>
+            <p>{phoneCopied ? "Copied!" : phone}</p>
+          </div>
         </div>
 
+        {/* GitHub */}
+        <a href="https://github.com/Tommy-Parisi" target="_blank" rel="noreferrer" className="contact-card">
+          <div className="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="contact-info">
+            <h3>GitHub</h3>
+            <p>Tommy-Parisi</p>
+          </div>
+        </a>
 
-      </aside>
+        {/* LinkedIn */}
+        <a href="https://www.linkedin.com/in/thomas-parisi-771a76261/" target="_blank" rel="noreferrer" className="contact-card">
+          <div className="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <rect x="2" y="9" width="4" height="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="contact-info">
+            <h3>LinkedIn</h3>
+            <p>Thomas Parisi</p>
+          </div>
+        </a>
+
+        {/* Resume */}
+        <a href="/resume.pdf" target="_blank" rel="noreferrer" className="contact-card">
+          <div className="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="14,2 14,8 20,8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="10,9 9,9 8,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="contact-info">
+            <h3>Resume</h3>
+            <p>Download PDF</p>
+          </div>
+        </a>
+
+        {/* Projects */}
+        <a href="/projects" className="contact-card">
+          <div className="contact-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="contact-info">
+            <h3>Projects</h3>
+            <p>View my work</p>
+          </div>
+        </a>
+
+      </div>
     </section>
   );
 };
-
-const ContactForm: React.FC<{ toEmail: string }> = ({ toEmail }) => {
-  const [state, setState] = useState<SubmitState>("idle");
-  const [values, setValues] = useState({
-    name: "",
-    from: "",
-    purpose: "Recruiting",
-    message: "",
-    company: "", 
-  });
-
-  const disabled = useMemo(() => state === "submitting", [state]);
-
-  const invalid = useMemo(() => {
-    if (!values.name.trim()) return "Please enter your name.";
-    if (!isEmail(values.from)) return "Please use a valid email.";
-    if (!values.message.trim()) return "Please include a short message.";
-    return "";
-  }, [values]);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setValues((v) => ({ ...v, [name]: value }));
-  };
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (values.company) return; // honeypot triggered; silently ignore
-
-    if (invalid) return setState("error");
-
-    try {
-      setState("submitting");
-
-      // TODO: Replace with your real endpoint or form service
-      // Example shape:
-      // await fetch("/api/contact", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(values),
-      // });
-
-      // For now: fall back to mailto to ensure zero‑backend MVP works
-      const subject = encodeURIComponent(`[Portfolio] ${values.purpose} — ${values.name}`);
-      const body = encodeURIComponent(
-        `From: ${values.name} <${values.from}>\nPurpose: ${values.purpose}\n\n${values.message}`
-      );
-      window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
-
-      setState("success");
-      setValues({ name: "", from: "", purpose: "Recruiting", message: "", company: "" });
-    } catch (err) {
-      console.error(err);
-      setState("error");
-    }
-  };
-
-  return (
-    <form className="form" onSubmit={onSubmit} noValidate>
-      <div className="row">
-        <div className="field">
-          <label htmlFor="name">Your name</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            placeholder="Sana Dev — Recruiting @ BAE Systems"
-            value={values.name}
-            onChange={onChange}
-            required
-          />
-        </div>
-        <div className="field">
-          <label htmlFor="from">Your email</label>
-          <input
-            id="from"
-            name="from"
-            type="email"
-            placeholder="you@company.com"
-            value={values.from}
-            onChange={onChange}
-            required
-          />
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="field">
-          <label htmlFor="purpose">I’m reaching out about</label>
-          <select id="purpose" name="purpose" value={values.purpose} onChange={onChange}>
-            <option>Recruiting</option>
-            <option>Internship</option>
-            <option>Collaboration</option>
-            <option>Speaking</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="field">
-        <label htmlFor="message">Message</label>
-        <textarea
-          id="message"
-          name="message"
-          rows={6}
-          placeholder="Hi Thomas — I saw your FileSort and Stereo Analysis projects. We’re exploring an AI‑assisted document pipeline and would love to chat about an internship this spring."
-          value={values.message}
-          onChange={onChange}
-          required
-        />
-      </div>
-
-      {/* Honeypot (hidden for users/screen readers) */}
-      <div className="hp" aria-hidden>
-        <label>Company (leave blank)</label>
-        <input name="company" value={values.company} onChange={onChange} tabIndex={-1} />
-      </div>
-
-      <div className="actions">
-        <button className="button" type="submit" disabled={disabled}>
-          {state === "submitting" ? "Sending…" : "Send message"}
-        </button>
-        {state === "error" && (
-          <span className="error" role="alert">
-            {invalid || "Something went wrong. Try the email button on the right."}
-          </span>
-        )}
-        {state === "success" && (
-          <span className="success" role="status">Thanks! Opening your email client…</span>
-        )}
-      </div>
-    </form>
-  );
-};
-
-// ------------------------------- Styles ------------------------------------
 
 const styles = `
 :root{
   --bg:#0b0d12;--surface:#10131a;--muted:#9aa3b2;--text:#e8ecf2;--brand:#63b3ff;--ring:#3b82f6;--chip:#1b2230;--chipText:#c9d4e3;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.4);
 }
+
 *{box-sizing:border-box}
-.contact-root{color:var(--text);background:radial-gradient(1200px 600px at 10% -10%, rgba(99,179,255,.08), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(99,255,210,.06), transparent 60%), var(--bg);min-height:100vh}
 
-.hero{max-width:1500px;margin:0 auto;padding:72px 24px 12px}
-.hero-inner{max-width:1500px}
-.eyebrow{color:#b9c7dd;letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-bottom:8px}
-.hero h1{font-size:44px;line-height:1.05;margin:0 0 8px}
-.tagline{color:#cdd6e6;font-size:18px;line-height:1.55;margin:0 0 6px}
-.sub{color:#9fb0cc;margin:0}
+.contact-root{
+  color:var(--text);
+  background:radial-gradient(1200px 600px at 10% -10%, rgba(99,179,255,.08), transparent 60%), 
+             radial-gradient(900px 500px at 100% 0%, rgba(99,255,210,.06), transparent 60%), 
+             var(--bg);
+  min-height:100vh;
+}
 
-.contact{max-width:1500px;margin:16px auto 24px;padding:0 24px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-@media(max-width:960px){.contact{grid-template-columns:1fr}}
-.left h2{margin:0 0 8px}
+.hero{
+  max-width:1200px;
+  margin:0 auto;
+  padding:72px 24px 48px;
+  text-align:center;
+}
 
-.form{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));border:1px solid #1b2230;border-radius:16px;padding:16px;box-shadow:var(--shadow)}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.field label{color:#a9b5c9;font-size:13px}
-.field input,.field select,.field textarea{background:#0f131b;border:1px solid #1f2430;color:var(--text);border-radius:12px;padding:12px 12px;outline:none}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ring);box-shadow:0 0 0 4px rgba(59,130,246,.15)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:620px){.row{grid-template-columns:1fr}}
-.actions{display:flex;align-items:center;gap:12px}
-.error{color:#ffb3b3}
-.success{color:#b2f1c2}
-.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.hero-inner{
+  max-width:1000px;
+  margin:0 auto;
+}
 
-.right{display:grid;gap:16px}
-.panel{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));border:1px solid #1b2230;border-radius:16px;padding:16px}
-.direct{display:flex;flex-wrap:wrap;gap:10px}
-.links{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.links a{color:#cfe0ff;text-decoration:none}
-.muted{color:var(--muted)}
+.eyebrow{
+  color:#b9c7dd;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom:8px;
+}
 
-.button{background:linear-gradient(180deg,#2b63d9,#1b4ab8);border:1px solid #2f55c8;color:white;padding:10px 12px;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.button:hover{filter:brightness(1.05)}
-.button--ghost{background:transparent;border:1px solid #24314a;color:#dbe8ff}
-.button--ghost:hover{background:#0f1726}
+.hero h1{
+  font-size:48px;
+  line-height:1.05;
+  margin:0 0 16px;
+}
 
-.faq{max-width:1500px;margin:24px auto 56px;padding:0 24px}
-.faq-inner{background:linear-gradient(180deg, rgba(99,179,255,.08), rgba(99,179,255,.02));border:1px solid #1b2230;border-radius:20px;padding:20px;box-shadow:var(--shadow)}
-.faq h2{margin:0 0 8px}
-.faq ul{margin:0 0 0 18px;line-height:1.5}
+.tagline{
+  color:#cdd6e6;
+  font-size:18px;
+  line-height:1.55;
+  margin:0 0 12px;
+}
+
+.sub{
+  color:#9fb0cc;
+  margin:0;
+  font-size:16px;
+}
+
+.contact-section{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 24px 80px;
+}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+  gap:20px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.contact-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
+  border:1px solid #1b2230;
+  border-radius:16px;
+  padding:24px;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  text-decoration:none;
+  color:inherit;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.contact-card:hover{
+  transform:translateY(-2px);
+  border-color:#2a3441;
+  box-shadow:0 8px 25px rgba(0,0,0,.15);
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+}
+
+.contact-icon{
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  background:linear-gradient(135deg, #2b63d9, #1b4ab8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  flex-shrink:0;
+}
+
+.contact-info h3{text-align:left;
+  margin:0 0 4px 0;
+  font-size:16px;
+  font-weight:600;
+  color:var(--text);
+}
+
+.contact-info p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+@media(max-width:768px){
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+  
+  .hero h1{
+    font-size:36px;
+  }
+  
+  .tagline{
+    font-size:16px;
+  }
+}
+
+@media(max-width:640px){
+  .contact-card{
+    padding:20px;
+  }
+  
+  .contact-icon{
+    width:40px;
+    height:40px;
+  }
+}
 `;
 
 export default ContactPage;

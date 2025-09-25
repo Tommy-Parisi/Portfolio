@@ -75,7 +75,7 @@ const TypewriterText = () => {
         style={{
           flexGrow: 1,
           textAlign: 'right',
-          fontFamily: "'Bebas Neue', sans-serif",
+          fontFamily: "'Minecraft', monospace",
           fontSize: '2rem',
           letterSpacing: '1px',
         }}
