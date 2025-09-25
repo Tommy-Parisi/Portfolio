@@ -1,0 +1,92 @@
+import TypewriterText from "../components/TypewriterText";
+import "../App.css";
+
+export default function Home() {
+  return (
+    <main className="container mx-auto px-4 py-8">
+      <div className="mb-8">
+        <TypewriterText></TypewriterText>
+      </div>
+      
+      <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem' }}>
+        <div style={{ flex: '0 0 50%', display: 'flex', justifyContent: 'center' }}>
+          <img 
+            src="/assets/profile-image.jpg" 
+            alt="Profile" 
+            className="rounded-lg shadow-lg w-32 h-auto object-cover"
+            style={{ maxWidth: '512px', width: '100%' }}
+          />
+        </div>
+
+        <div style={{ flex: '0 0 50%' }} className="home-text">
+          <p>
+            Welcome to my portfolio! My name is Thomas Parisi. <br /><br />
+            I am a Senior at the University of Delaware studying Computer Science 
+            with a concentration in Artificial Intelligence and Robotics 
+            and a Minor in Cybersecurity. I am a passionate full-stack developer with
+            a wide range of expertise. <br /><br />
+            Please take a look around at all of my projects and experience. 
+            If you have any questions, check out the contact page and send me a message!
+          </p>
+          
+          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+            <a 
+              href="/projects" 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                background: 'linear-gradient(45deg, #000000 0%, #1f1f1f 25%, #333333 50%, #4a4a4a 75%, #666666 100%)',
+                border: '2px solid #ffffff',
+                color: '#ffffff',
+                padding: '20px 40px',
+                borderRadius: '50px',
+                fontSize: '1.3rem',
+                fontFamily: '"Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+                fontWeight: '800',
+                textDecoration: 'none',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                cursor: 'pointer',
+                letterSpacing: '1.2px',
+                textTransform: 'none',
+                position: 'relative',
+                overflow: 'hidden',
+                backdropFilter: 'blur(10px)',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                MozUserSelect: 'none',
+                msUserSelect: 'none'
+              }}
+              onMouseOver={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.background = 'linear-gradient(45deg, #ffffff 0%, #f0f0f0 25%, #e0e0e0 50%, #d0d0d0 75%, #c0c0c0 100%)';
+                target.style.color = '#000000';
+                target.style.transform = 'translateY(-5px) scale(1.05)';
+                target.style.boxShadow = '0 20px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(0, 0, 0, 0.1)';
+                target.style.borderColor = '#000000';
+                target.style.letterSpacing = '1.5px';
+              }}
+              onMouseOut={(e) => {
+                const target = e.target as HTMLAnchorElement;
+                target.style.background = 'linear-gradient(45deg, #000000 0%, #1f1f1f 25%, #333333 50%, #4a4a4a 75%, #666666 100%)';
+                target.style.color = '#ffffff';
+                target.style.transform = 'translateY(0) scale(1)';
+                target.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                target.style.borderColor = '#ffffff';
+                target.style.letterSpacing = '1.2px';
+              }}
+            >
+              <span>Explore My Work</span>
+              <span style={{ 
+                fontSize: '1.4rem', 
+                transition: 'transform 0.3s ease',
+                display: 'inline-block'
+              }}></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}

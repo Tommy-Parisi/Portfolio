@@ -42,7 +42,7 @@ const PROJECTS: Project[] = [
     year: 2025,
     complexity: 5,
     links: [
-      { label: "Demo", href: "https://yt" }, //use youtube video showing functionality
+      //{ label: "Demo", href: "https://yt" }, //use youtube video showing functionality -----
       { label: "GitHub", href: "https://github.com/Tommy-Parisi/FileSorter" },
     ],
   },
@@ -50,7 +50,7 @@ const PROJECTS: Project[] = [
     id: "captcha-automation-research",
     title: "CAPTCHA Automation & Robustness Research",
     subtitle: "Automated puzzle-based CAPTCHA analysis and interaction",
-    description: "Led a remote research project with VIVID Cybersecurity Research through the University of Alabama in Huntsville studying automated detection and interaction with image-based puzzle-style CAPTCHAs. Under the supervision of faculty doctors in computer science and cybersecurity, I coordinated a small team to build, evaluate, and document automated pipelines that detect CAPTCHA elements, classify targets, and simulate human interaction in controlled experimental settings. The work focused on assessing robustness and proposing defensive mitigations and usability recommendations rather than adversarial deployment.",
+    description: "Remote research project with VIVID Cybersecurity Research through the University of Alabama in Huntsville studying automated detection and interaction with image-based puzzle-style CAPTCHAs.",
     highlights: [
       "Worked closeley with faculty advisors to define research goals, experimental design, and ethical considerations",
       "Created a testbed to evaluate CAPTCHA detection and interaction",
@@ -63,7 +63,7 @@ const PROJECTS: Project[] = [
     year: 2025,
     complexity: 4,
     links: [
-      { "label": "Code (internal/repo)", "href": "https://github.com/Tommy-Parisi/CaptchaCracker" },
+      { "label": "GitHub", "href": "https://github.com/Tommy-Parisi/CaptchaCracker" },
     ]
   },
   {
@@ -102,7 +102,7 @@ const PROJECTS: Project[] = [
     year: 2025,
     complexity: 4,
     links: [
-      { label: "Live", href: "https://example.com/swapborn" },
+      { label: "GitHub", "href": "https://GitHub.com/Tommy-Parisi/swapborn" },
     ],
   },
   // Sage
@@ -124,7 +124,6 @@ const PROJECTS: Project[] = [
     year: 2024,
     complexity: 4,
     links: [
-      { label: "Demo", href: "https://github.com/you/sage-teamx" },
     ],
   },
   // Computer Vision Projects
@@ -143,8 +142,7 @@ const PROJECTS: Project[] = [
     year: 2025,
     complexity: 4,
     links: [
-      { label: "Source Code", href: "PR1.zip" },
-      { label: "Report", href: "summary.txt" }
+      // { label: "Source Code", href: "PR1.zip" }, some sort of report or images
     ]
   },
   {
@@ -162,8 +160,7 @@ const PROJECTS: Project[] = [
     year: 2025,
     complexity: 5,
     links: [
-      { label: "Source Code", href: "PR2.zip" },
-      { label: "README", href: "README.md" }
+      //{ label: "README", href: "README.md" } some sort of report 
     ],
   },
   {
@@ -181,9 +178,9 @@ const PROJECTS: Project[] = [
     year: 2025,
     complexity: 5,
     links: [
-      { label: "Image Classification", href: "ImageClassification.ipynb" },
-      { label: "Custom CNN", href: "customCNN.ipynb" },
-      { label: "Semantic Segmentation", href: "SemanticSegmentation.ipynb" }
+      //{ label: "Image Classification", href: "ImageClassification.ipynb" },
+      //{ label: "Custom CNN", href: "customCNN.ipynb" },
+      //{ label: "Semantic Segmentation", href: "SemanticSegmentation.ipynb" }
     ],
 },
 {
@@ -202,7 +199,7 @@ const PROJECTS: Project[] = [
   year: 2025,
   complexity: 2,
   links: [
-    { label: "Source Code", href: "https://github.com/Tommy-Parisi/Portfolio" }
+    //{ label: "Source Code", href: "https://github.com/Tommy-Parisi/Portfolio" }
   ]
 }
 
@@ -222,7 +219,7 @@ function cx(...classes: Array<string | false | null | undefined>) {
 
 // ------------------------ Components ---------------------------------------
 
-const ProjectsPage: React.FC = () => {
+const ProjectsPage: React.FC<{ onNavbarToggle?: { hide: () => void; show: () => void } }> = ({ onNavbarToggle }) => {
   const [query, setQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortKey, setSortKey] = useState<"Newest" | "Complexity">(
@@ -310,7 +307,7 @@ const ProjectsPage: React.FC = () => {
 
       <section className="grid" aria-label="projects list">
         {filtered.map(p => (
-          <ProjectCard key={p.id} p={p} onOpen={() => setActiveId(p.id)} />
+          <ProjectCard key={p.id} p={p} onOpen={() => { setActiveId(p.id); onNavbarToggle?.hide(); }} />
         ))}
         {filtered.length === 0 && (
           <div className="empty" role="status">
@@ -326,7 +323,7 @@ const ProjectsPage: React.FC = () => {
       </footer>
 
       {active && (
-        <ProjectModal project={active} onClose={() => setActiveId(null)} />
+        <ProjectModal project={active} onClose={() => { setActiveId(null); onNavbarToggle?.show(); }} />
       )}
 
       {/* Inline styles for a self-contained MVP */}
@@ -378,14 +375,12 @@ const ProjectCard: React.FC<{
               {l.label}
             </a>
           ))}
-          <button className="button" onClick={onOpen} aria-label={`Open ${p.title} details`}>
-            Quick View
-          </button>
         </div>
       </div>
     </article>
   );
 };
+
 
 const ProjectModal: React.FC<{
   project: Project;
@@ -398,6 +393,22 @@ const ProjectModal: React.FC<{
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
+  // disable scroll on body when modal is open and scroll modal to bottom
+  React.useEffect(() => {
+    document.body.style.overflow = "hidden";
+    
+    // Scroll modal to bottom after it opens
+    const modalElement = document.querySelector(".modal");
+    if (modalElement) {
+      setTimeout(() => {
+        modalElement.scrollTo({ top: modalElement.scrollHeight, behavior: "smooth" });
+      }, 100); // Small delay to ensure modal is fully rendered
+    }
+    
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${project.title} details`} onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -488,7 +499,7 @@ const styles = `
 .grid{max-width:1500px;margin:8px auto 48px;padding:0 24px;display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
 .card{grid-column:span 12; background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)); border:1px solid #1b2230;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;cursor:pointer;outline:none;transition:transform .15s ease, border-color .2s ease}
 .card:focus{border-color:var(--ring); box-shadow:0 0 0 4px rgba(59,130,246,.15), var(--shadow)}
-@media(min-width:720px){.card{grid-column:span 6}}
+@media(min-width:720px){.card{grid-column:span 8}}
 @media(min-width:1024px){.card{grid-column:span 4}}
 
 .media{position:relative;aspect-ratio:16/9;background:#0c1017}
@@ -515,11 +526,13 @@ const styles = `
 
 /* Modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(5,9,15,.65);backdrop-filter: blur(4px);display:grid;place-items:center;padding:20px;animation:fadeIn .15s ease}
-.modal{width:min(920px,100%); max-height:90vh; overflow:auto; background:var(--surface); border:1px solid #1b2230; border-radius:20px; box-shadow: var(--shadow);}
+.modal{width:min(1200px,95%); max-height:90vh; overflow:auto; background:var(--surface); border:1px solid #1b2230; border-radius:20px; box-shadow: var(--shadow);}
 .modal-header{padding:20px 20px 6px;border-bottom:1px solid #161b26}
 .modal-media{aspect-ratio:16/9;background:#0e141f}
 .modal-media img, .modal-media video{width:100%;height:100%;object-fit:cover}
 .modal-content{display:grid;gap:16px;padding:16px 20px 22px}
+.modal-content ul{margin:0 0 0 1em;padding:0;list-style-position:outside}
+.modal-content li{margin:0 0 4px 0;padding:0;text-align:left}
 .modal-content section h4{margin:0 0 8px;font-size:14px;letter-spacing:.3px;color:#a9b5c9;text-transform:uppercase}
 .modal-links{display:flex;gap:10px;flex-wrap:wrap}
 .modal-close{position:sticky;float:right;top:10px;margin:10px 10px 0 0;background:#0e1420;border:1px solid #22304a;color:#cfe0ff;border-radius:10px;padding:6px 10px;cursor:pointer}

@@ -1,0 +1,337 @@
+import React, { useMemo, useState } from "react";
+
+/**
+ * ContactPage.tsx — Sleek, recruiter‑ready contact page (Vite + React, TS)
+ * ------------------------------------------------------------------------
+ * ✅ Self‑contained styles (no CSS framework required)
+ * ✅ Accessible, keyboard‑friendly, responsive
+ * ✅ Form with client‑side validation + graceful fallback (mailto)
+ * ✅ Copy‑to‑clipboard for email, quick links, availability hint
+ * ✅ Anti‑spam honeypot field (ignored by users/screen readers)
+ *
+ * Hook up the submit handler to your API or form service later.
+ */
+
+// ------------------------------ Types --------------------------------------
+
+type SubmitState = "idle" | "submitting" | "success" | "error";
+
+// --------------------------- Helper Utils ----------------------------------
+
+
+function isEmail(v: string) {
+  // simple RFC‑ish check; replace with stronger logic if needed
+  return /.+@.+\..+/.test(v);
+}
+
+// ------------------------------- Page --------------------------------------
+
+const ContactPage: React.FC = () => {
+  return (
+    <main className="contact-root">
+      <Hero />
+      <ContactShell />
+      <style>{styles}</style>
+    </main>
+  );
+};
+
+// -------------------------------- Hero -------------------------------------
+
+const Hero: React.FC = () => (
+  <header className="hero">
+    <div className="hero-inner">
+      <div className="eyebrow">Contact</div>
+      <h1>Let’s talk</h1>
+      <p className="tagline">
+        I’m interested in contributing through a <strong>Software Engineering or Cybersecurity </strong>role,
+        where I can build and ship impactful features, apply AI and ML, or help secure and protect critical systems.
+        I bring experience developing production-ready tools and backend systems, as well as performing cybersecurity analysis, 
+        research, and defense. I thrive in fast-paced, collaborative environments where I can bridge the gap between building innovative 
+        technology and ensuring its security.
+      </p>
+      <p className="sub">
+        Please reach out. Let's build!
+      </p>
+    </div>
+  </header>
+);
+
+// --------------------------- Contact + Form --------------------------------
+
+const ContactShell: React.FC = () => {
+  const [email] = useState("tcparisi55@gmail.com"); 
+  const [copied, setCopied] = useState(false);
+  const [phone] = useState("(315) 949-0106");
+  const [phoneCopied, setPhoneCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      // Ignore clipboard errors
+    }
+  };
+
+  const copyPhone = async () => {
+    try {
+      await navigator.clipboard.writeText(phone);
+      setPhoneCopied(true);
+      setTimeout(() => setPhoneCopied(false), 1600);
+    } catch {
+      // Ignore clipboard errors
+    }
+  };
+  return (
+    <section className="contact" aria-label="Contact form and details">
+      <div className="left">
+        <h2>Send a message</h2>
+        <ContactForm toEmail={email} />
+      </div>
+
+      <aside className="right" aria-label="Direct contact and links">
+        <div className="panel">
+          <h3>Direct</h3>
+          <div className="direct">
+            <div className="contact-row">
+              <button className="button button--ghost" onClick={copy} aria-live="polite">
+                {copied ? "Copied ✓" : email}
+              </button>
+              <a
+                className="button"
+                href={`mailto:${email}?subject=${encodeURIComponent("Inquiry from portfolio")}`}
+              >
+                Email me
+              </a>
+            </div>
+            <div className="contact-row">
+              <button className="button button--ghost" onClick={copyPhone} aria-live="polite">
+                {phoneCopied ? "Copied ✓" : phone}
+              </button>
+              <a
+                className="button"
+                href={`tel:${phone}`}
+              >
+                Call me
+              </a>
+            </div>
+            <div className="contact-row">
+              <a className="button button--ghost" href="/resume.pdf" target="_blank" rel="noreferrer">
+                Resume (PDF)
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="panel">
+          <h3>Links</h3>
+          <ul className="links">
+            <li>
+              <a href="https://github.com/Tommy-Parisi" target="_blank" rel="noreferrer">GitHub ↗</a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/thomas-parisi-771a76261/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            </li>
+            <li>
+              <a href="/Projects" rel="noreferrer">Projects →</a>
+            </li>
+            <li>
+              <a href="/About" rel="noreferrer">About →</a>
+            </li>
+          </ul>
+        </div>
+
+
+      </aside>
+    </section>
+  );
+};
+
+const ContactForm: React.FC<{ toEmail: string }> = ({ toEmail }) => {
+  const [state, setState] = useState<SubmitState>("idle");
+  const [values, setValues] = useState({
+    name: "",
+    from: "",
+    purpose: "Recruiting",
+    message: "",
+    company: "", 
+  });
+
+  const disabled = useMemo(() => state === "submitting", [state]);
+
+  const invalid = useMemo(() => {
+    if (!values.name.trim()) return "Please enter your name.";
+    if (!isEmail(values.from)) return "Please use a valid email.";
+    if (!values.message.trim()) return "Please include a short message.";
+    return "";
+  }, [values]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setValues((v) => ({ ...v, [name]: value }));
+  };
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (values.company) return; // honeypot triggered; silently ignore
+
+    if (invalid) return setState("error");
+
+    try {
+      setState("submitting");
+
+      // TODO: Replace with your real endpoint or form service
+      // Example shape:
+      // await fetch("/api/contact", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(values),
+      // });
+
+      // For now: fall back to mailto to ensure zero‑backend MVP works
+      const subject = encodeURIComponent(`[Portfolio] ${values.purpose} — ${values.name}`);
+      const body = encodeURIComponent(
+        `From: ${values.name} <${values.from}>\nPurpose: ${values.purpose}\n\n${values.message}`
+      );
+      window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
+
+      setState("success");
+      setValues({ name: "", from: "", purpose: "Recruiting", message: "", company: "" });
+    } catch (err) {
+      console.error(err);
+      setState("error");
+    }
+  };
+
+  return (
+    <form className="form" onSubmit={onSubmit} noValidate>
+      <div className="row">
+        <div className="field">
+          <label htmlFor="name">Your name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder="Sana Dev — Recruiting @ BAE Systems"
+            value={values.name}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="from">Your email</label>
+          <input
+            id="from"
+            name="from"
+            type="email"
+            placeholder="you@company.com"
+            value={values.from}
+            onChange={onChange}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="field">
+          <label htmlFor="purpose">I’m reaching out about</label>
+          <select id="purpose" name="purpose" value={values.purpose} onChange={onChange}>
+            <option>Recruiting</option>
+            <option>Internship</option>
+            <option>Collaboration</option>
+            <option>Speaking</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="field">
+        <label htmlFor="message">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows={6}
+          placeholder="Hi Thomas — I saw your FileSort and Stereo Analysis projects. We’re exploring an AI‑assisted document pipeline and would love to chat about an internship this spring."
+          value={values.message}
+          onChange={onChange}
+          required
+        />
+      </div>
+
+      {/* Honeypot (hidden for users/screen readers) */}
+      <div className="hp" aria-hidden>
+        <label>Company (leave blank)</label>
+        <input name="company" value={values.company} onChange={onChange} tabIndex={-1} />
+      </div>
+
+      <div className="actions">
+        <button className="button" type="submit" disabled={disabled}>
+          {state === "submitting" ? "Sending…" : "Send message"}
+        </button>
+        {state === "error" && (
+          <span className="error" role="alert">
+            {invalid || "Something went wrong. Try the email button on the right."}
+          </span>
+        )}
+        {state === "success" && (
+          <span className="success" role="status">Thanks! Opening your email client…</span>
+        )}
+      </div>
+    </form>
+  );
+};
+
+// ------------------------------- Styles ------------------------------------
+
+const styles = `
+:root{
+  --bg:#0b0d12;--surface:#10131a;--muted:#9aa3b2;--text:#e8ecf2;--brand:#63b3ff;--ring:#3b82f6;--chip:#1b2230;--chipText:#c9d4e3;--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+.contact-root{color:var(--text);background:radial-gradient(1200px 600px at 10% -10%, rgba(99,179,255,.08), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(99,255,210,.06), transparent 60%), var(--bg);min-height:100vh}
+
+.hero{max-width:1500px;margin:0 auto;padding:72px 24px 12px}
+.hero-inner{max-width:1500px}
+.eyebrow{color:#b9c7dd;letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-bottom:8px}
+.hero h1{font-size:44px;line-height:1.05;margin:0 0 8px}
+.tagline{color:#cdd6e6;font-size:18px;line-height:1.55;margin:0 0 6px}
+.sub{color:#9fb0cc;margin:0}
+
+.contact{max-width:1500px;margin:16px auto 24px;padding:0 24px;display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:start}
+@media(max-width:960px){.contact{grid-template-columns:1fr}}
+.left{align-self:start}
+.left h2{margin:0 0 8px}
+.panel h3{margin:0 0 8px}
+
+.form{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));border:1px solid #1b2230;border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.field label{color:#a9b5c9;font-size:13px}
+.field input,.field select,.field textarea{background:#0f131b;border:1px solid #1f2430;color:var(--text);border-radius:12px;padding:12px 12px;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ring);box-shadow:0 0 0 4px rgba(59,130,246,.15)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+.actions{display:flex;align-items:center;gap:12px}
+.error{color:#ffb3b3}
+.success{color:#b2f1c2}
+.hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+
+.right{display:grid;gap:12px;align-self:start}
+.panel{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0));border:1px solid #1b2230;border-radius:16px;padding:14px}
+.direct{display:flex;flex-direction:column;gap:10px}
+.contact-row{display:flex;gap:10px;flex-wrap:wrap}
+.links{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.links a{color:#cfe0ff;text-decoration:none}
+.muted{color:var(--muted)}
+
+.button{background:linear-gradient(180deg,#2b63d9,#1b4ab8);border:1px solid #2f55c8;color:white;padding:10px 12px;border-radius:10px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.button:hover{filter:brightness(1.05)}
+.button--ghost{background:transparent;border:1px solid #24314a;color:#dbe8ff}
+.button--ghost:hover{background:#0f1726}
+
+.faq{max-width:1500px;margin:24px auto 56px;padding:0 24px}
+.faq-inner{background:linear-gradient(180deg, rgba(99,179,255,.08), rgba(99,179,255,.02));border:1px solid #1b2230;border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.faq h2{margin:0 0 8px}
+.faq ul{margin:0 0 0 18px;line-height:1.5}
+`;
+
+export default ContactPage;
