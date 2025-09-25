@@ -21,11 +21,11 @@ export default function Home() {
         <div style={{ flex: '0 0 50%' }} className="home-text">
           <p>
             Welcome to my portfolio! My name is Thomas Parisi. <br /><br />
-            I am a Junior at the University of Delaware studying Computer Science 
+            I am a Senior at the University of Delaware studying Computer Science 
             with a concentration in Artificial Intelligence and Robotics 
-            and a Minor in Cybersecurity. I am a passionate ful-stack capable developer
+            and a Minor in Cybersecurity. I am a passionate ful-stack developer with
             a wide range of expertise. <br /><br />
-            Please take a look around at all of my projects and scripts. 
+            Please take a look around at all of my projects and experience. 
             If you have any questions, check out the contact page and send me a message!
           </p>
         </div>
