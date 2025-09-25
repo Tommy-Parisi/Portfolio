@@ -50,7 +50,7 @@ const PROJECTS: Project[] = [
     id: "captcha-automation-research",
     title: "CAPTCHA Automation & Robustness Research",
     subtitle: "Automated puzzle-based CAPTCHA analysis and interaction",
-    description: "Led a remote research project with VIVID Cybersecurity Research through the University of Alabama in Huntsville studying automated detection and interaction with image-based puzzle-style CAPTCHAs. Under the supervision of faculty doctors in computer science and cybersecurity, I coordinated a small team to build, evaluate, and document automated pipelines that detect CAPTCHA elements, classify targets, and simulate human interaction in controlled experimental settings. The work focused on assessing robustness and proposing defensive mitigations and usability recommendations rather than adversarial deployment.",
+    description: "Remote research project with VIVID Cybersecurity Research through the University of Alabama in Huntsville studying automated detection and interaction with image-based puzzle-style CAPTCHAs.",
     highlights: [
       "Worked closeley with faculty advisors to define research goals, experimental design, and ethical considerations",
       "Created a testbed to evaluate CAPTCHA detection and interaction",
@@ -222,7 +222,7 @@ function cx(...classes: Array<string | false | null | undefined>) {
 
 // ------------------------ Components ---------------------------------------
 
-const ProjectsPage: React.FC = () => {
+const ProjectsPage: React.FC<{ onNavbarToggle?: { hide: () => void; show: () => void } }> = ({ onNavbarToggle }) => {
   const [query, setQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortKey, setSortKey] = useState<"Newest" | "Complexity">(
@@ -310,7 +310,7 @@ const ProjectsPage: React.FC = () => {
 
       <section className="grid" aria-label="projects list">
         {filtered.map(p => (
-          <ProjectCard key={p.id} p={p} onOpen={() => setActiveId(p.id)} />
+          <ProjectCard key={p.id} p={p} onOpen={() => { setActiveId(p.id); onNavbarToggle?.hide(); }} />
         ))}
         {filtered.length === 0 && (
           <div className="empty" role="status">
@@ -326,7 +326,7 @@ const ProjectsPage: React.FC = () => {
       </footer>
 
       {active && (
-        <ProjectModal project={active} onClose={() => setActiveId(null)} />
+        <ProjectModal project={active} onClose={() => { setActiveId(null); onNavbarToggle?.show(); }} />
       )}
 
       {/* Inline styles for a self-contained MVP */}
@@ -387,6 +387,7 @@ const ProjectCard: React.FC<{
   );
 };
 
+
 const ProjectModal: React.FC<{
   project: Project;
   onClose: () => void;
@@ -397,6 +398,14 @@ const ProjectModal: React.FC<{
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
+
+  // disable scroll on body when modal is open
+  React.useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={`${project.title} details`} onClick={onClose}>
@@ -520,6 +529,8 @@ const styles = `
 .modal-media{aspect-ratio:16/9;background:#0e141f}
 .modal-media img, .modal-media video{width:100%;height:100%;object-fit:cover}
 .modal-content{display:grid;gap:16px;padding:16px 20px 22px}
+.modal-content ul{margin:0 0 0 1em;padding:0;list-style-position:outside}
+.modal-content li{margin:0 0 4px 0;padding:0;text-align:left}
 .modal-content section h4{margin:0 0 8px;font-size:14px;letter-spacing:.3px;color:#a9b5c9;text-transform:uppercase}
 .modal-links{display:flex;gap:10px;flex-wrap:wrap}
 .modal-close{position:sticky;float:right;top:10px;margin:10px 10px 0 0;background:#0e1420;border:1px solid #22304a;color:#cfe0ff;border-radius:10px;padding:6px 10px;cursor:pointer}

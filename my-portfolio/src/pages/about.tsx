@@ -22,11 +22,11 @@ const Hero: React.FC = () => (
         <div className="eyebrow">About Me</div>
         <h1>Thomas Parisi</h1>
         <p className="tagline">
-          Senior Computer Science at The University of Delaware — AI & Robotics
-          concentration, Cybersecurity minor. I build end‑to‑end products where
-          <em>research‑grade ideas</em> meet <em>production reliability</em>:
-          desktop apps (Tauri), data/ML systems, and game prototypes with crisp
-          design and real‑world impact.
+          I am a Senior studying Computer Science at The University of Delaware — AI & Robotics
+          concentration, Cybersecurity minor. I am from Syracuse, New York and have spent the last
+          four years in northern Delaware. I am willing to relocate for a position, but would also love 
+          to work in Philadelphia, Syracuse, Chicago, or New York City. My dream is to work as a Game Developer 
+          or Software Engineer for whoever I can help!
         </p>
         <div className="hero-cta">
           <a className="button" href="/resume.pdf" target="_blank" rel="noreferrer">Download Resume</a>
@@ -69,7 +69,7 @@ const Fact: React.FC<{ kpi: string; label: string }> = ({ kpi, label }) => (
 
 const Highlights: React.FC = () => (
   <section className="highlights" aria-label="Experience highlights">
-    <h2>What I build</h2>
+    <h2>What I'm Currently Working On</h2>
     <div className="cards">
       <HighlightCard
         title="FileSort — Smart File Organizer"
@@ -84,30 +84,31 @@ const Highlights: React.FC = () => (
         ]}
       />
       <HighlightCard
-        title="SageTeamX — Discord Automation"
-        subtitle="Node.js · TypeScript · Discord.js"
+        title="Self-Hosted Home Server"
+        subtitle="Ubuntu · Tailscale · Docker · Jellyfin"
         bullets={[
-          "Aided in developing custom calendar command with Google Calendar API",
-          "Worked in an Agile team, holding sprints and consulting with dev ops and testing teams",
+          "Host personal portfolio website with custom domain on Ubuntu server",
+          "Configured Tailscale VPN, UFW, and key-based SSH for secure remote access",
+          "Deployed Dockerized Jellyfin media server for streaming and media management",
         ]}
       />
       <HighlightCard
-        title="Captcha Cracker — Research Project"
-        subtitle="Yolo11n, OpenCV, Selenium, Python"
+        title="UD Information Security AI Development — Senior Capstone"
+        subtitle="Python · AI · Cybersecurity"
         bullets={[
-          "Automated CAPTCHA detection and interaction using selenium and pyautogui",
-          "Object detection with YOLOv11n and OpenCV, tested on photo‑based CAPTCHAs",
-          "Worked closley with University of Alabama at Huntsville VIVID faculty",
+          "Working with UD information security department to harden systems",
+          "integrating AI solutions to enhance tasks viable for automation"
         ]}
       />
       <HighlightCard
-        title="Swapborn — Puzzle Platformer"
-        subtitle="Godot 4 · GDScript"
+        title="Current Coursework"
+        subtitle="Networks · Cybersecurity · Machine Learning · System Hardening"
         bullets={[
-          "Death‑swap core mechanic; timing‑driven level design",
-          "Custom levels with NPC pathfinding",
+          "Study networks, protocols, and end-to-end communication analysis",
+          "Explore reverse engineering and penetration testing to identify vulnerabilities",
+          "Learn machine learning techniques for classification and regression",
+          "Apply system hardening and protection strategies to secure environments",
         ]}
-        //links={[{ label: "Page", href: "/projects/swapborn" }]} add a game demo 
       />
     </div>
   </section>

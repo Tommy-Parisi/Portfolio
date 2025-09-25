@@ -4,12 +4,13 @@ import Footer from './Footer';
 
 type LayoutProps = {
   children: ReactNode;
+  isNavbarVisible?: boolean;
 };
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, isNavbarVisible = true }: LayoutProps) => {
   return (
     <>
-      <Navbar />
+      {isNavbarVisible && <Navbar />}
       <main style={{ padding: '2rem', maxWidth: '1500px', margin: '0 auto' }}>
         {children}
       </main>
