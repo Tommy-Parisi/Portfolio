@@ -1,4 +1,14 @@
 import React, { useMemo, useState } from "react";
+import smartSortImage from "/public/assets/SmartSort.png";
+import captchaImage from "/public/assets/captcha.png";
+import serverImage from "/public/assets/server.png";
+import swapbornImage from "/public/assets/Swapborn.png";
+import sageImage from "/public/assets/Sage.png";
+import mosaickImage from "/public/assets/mosaick2.png";
+import stereoRegionImage from "/public/assets/stereo_region.png";
+import sheepSegmentedImage from "/public/assets/Sheep_segmented.png";
+import portfolioImage from "/public/assets/portfolio.png";
+
 // ----------------------------- Types ---------------------------------------
 
 type Link = {
@@ -37,8 +47,7 @@ const PROJECTS: Project[] = [
       "HDBSCAN with sticky clusters + human‑in‑the‑loop labeling",
     ],
     tech: ["Python", "Svelte", "Tauri", "HDBSCAN", "Embeddings", "TypeScript"],
-    image:
-      "/src/assets/SmartSort.png",
+    image: smartSortImage,
     year: 2025,
     complexity: 5,
     links: [
@@ -59,7 +68,7 @@ const PROJECTS: Project[] = [
       "Evaluated detection and interaction robustness across varied datasets and environmental conditions, identifying key failure modes and practical mitigations",
     ],
     tech: ["Python", "YOLO11n", "OpenCV", "Tesseract OCR", "Selenium", "PyAutoGUI", "Computer Vision", "Experimental Evaluation", "CNN"],
-    image: "/src/assets/captcha.png",
+    image: captchaImage,
     year: 2025,
     complexity: 4,
     links: [
@@ -79,7 +88,7 @@ const PROJECTS: Project[] = [
       "Maintain system reliability through regular updates, resource monitoring, and service uptime checks"
     ],
     tech: ["Linux", "Ubuntu", "Tailscale", "SSH", "UFW", "Docker", "Jellyfin", "Web Hosting", "System Administration", "Domain Configuration", "Nginx"],
-    image: "/src/assets/server.png",
+    image: serverImage,
     year: 2025,
     complexity: 3,
     links: [
@@ -97,8 +106,7 @@ const PROJECTS: Project[] = [
       "Built in Godot 4 with GDScript",
     ],
     tech: ["Godot", "GDScript", "Pathfinding", "Game Design"],
-    image:
-      "/src/assets/SwapBorn.png",
+    image: swapbornImage,
     year: 2025,
     complexity: 4,
     links: [
@@ -119,8 +127,7 @@ const PROJECTS: Project[] = [
       "Utilized by the UD CS Department of 4000+ students",
     ],
     tech: ["Node.js", "TypeScript", "Discord.js", "Google Calendar API"],
-    image:
-      "src/assets/Sage.png",
+    image: sageImage,
     year: 2024,
     complexity: 4,
     links: [
@@ -138,7 +145,7 @@ const PROJECTS: Project[] = [
       "Blended multiple images seamlessly using pyramid-based mosaicking"
     ],
     tech: ["Python", "OpenCV", "NumPy", "Computer Vision"],
-    image: "/src/assets/mosaick2.png",
+    image: mosaickImage,
     year: 2025,
     complexity: 4,
     links: [
@@ -156,7 +163,7 @@ const PROJECTS: Project[] = [
       "Applied left-right consistency checks and interpolation to handle occlusions and fill disparity gaps"
     ],
     tech: ["Python", "OpenCV", "NumPy", "Computer Vision", "Stereo Vision"],
-    image: "/src/assets/stereo_region.png", 
+    image: stereoRegionImage, 
     year: 2025,
     complexity: 5,
     links: [
@@ -174,7 +181,7 @@ const PROJECTS: Project[] = [
       "Applied FCN-based semantic segmentation (fcn_resnet50/fcn_resnet101) to detect and label objects across 21 classes"
     ],
     tech: ["Python", "PyTorch", "CNN", "Transfer Learning", "FCN", "Computer Vision", "Deep Learning"],
-    image: "/src/assets/Sheep_segmented.png",
+    image: sheepSegmentedImage,
     year: 2025,
     complexity: 5,
     links: [
@@ -195,7 +202,7 @@ const PROJECTS: Project[] = [
     "Showcases technical projects, work experience, and resume in a professional format"
   ],
   tech: ["HTML5", "CSS3", "Responsive Design", "Web Hosting", "Domain Configuration"],
-  image: "/src/assets/portfolio.png", // replace with a screenshot of your site
+  image: portfolioImage, // replace with a screenshot of your site
   year: 2025,
   complexity: 2,
   links: [

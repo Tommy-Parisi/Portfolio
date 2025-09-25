@@ -1,4 +1,5 @@
 import TypewriterText from "../components/TypewriterText";
+import headshotImage from "/public/assets/headshot.jpg";
 import "../App.css";
 
 export default function Home() {
@@ -8,17 +9,16 @@ export default function Home() {
         <TypewriterText></TypewriterText>
       </div>
       
-      <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem' }}>
-        <div style={{ flex: '0 0 50%', display: 'flex', justifyContent: 'center' }}>
+      <div className="home-layout">
+        <div className="image-container">
           <img 
-            src="src/assets/headshot.jpg" 
+            src={headshotImage}
             alt="Profile" 
-            className="rounded-lg shadow-lg w-32 h-auto object-cover"
-            style={{ maxWidth: '512px', width: '100%' }}
+            className="rounded-lg shadow-lg w-32 h-auto object-cover profile-image"
           />
         </div>
 
-        <div style={{ flex: '0 0 50%' }} className="home-text">
+        <div className="text-container home-text">
           <p>
             Welcome to my portfolio! My name is Thomas Parisi. <br /><br />
             I am a Senior at the University of Delaware studying Computer Science 
@@ -44,6 +44,65 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        .home-layout {
+          display: flex;
+          flex-direction: row;
+          gap: 2rem;
+        }
+        
+        .image-container {
+          flex: 0 0 50%;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .text-container {
+          flex: 0 0 50%;
+        }
+        
+        .profile-image {
+          max-width: 512px;
+          width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+          .home-layout {
+            flex-direction: column;
+            gap: 1.5rem;
+          }
+          
+          .image-container,
+          .text-container {
+            flex: 1 1 auto;
+          }
+          
+          .profile-image {
+            max-width: 300px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .home-layout {
+            gap: 1rem;
+          }
+          
+          .profile-image {
+            max-width: 250px;
+          }
+          
+          .home-text p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+          }
+          
+          .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+        }
+      `}</style>
     </main>
   );
 }

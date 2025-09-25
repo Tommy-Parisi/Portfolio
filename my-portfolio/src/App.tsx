@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
-import Home from './pages/Home.tsx';
-import About from './pages/About.tsx';
-import Projects from './pages/Projects.tsx';
-import Contact from './pages/Contact.tsx';
+import Home from './pages/home.tsx';
+import About from './pages/about.tsx';
+import Projects from './pages/projects.tsx';
+import Contact from './pages/contact.tsx';
 
 function App() {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
