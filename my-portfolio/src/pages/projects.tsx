@@ -78,7 +78,7 @@ const PROJECTS: Project[] = [
       "Implemented containerized Jellyfin media server with Docker for streaming and media management",
       "Maintain system reliability through regular updates, resource monitoring, and service uptime checks"
     ],
-    tech: ["Linux", "Ubuntu", "Tailscale", "SSH", "UFW", "Docker", "Jellyfin", "Web Hosting", "System Administration", "Domain Configuration"],
+    tech: ["Linux", "Ubuntu", "Tailscale", "SSH", "UFW", "Docker", "Jellyfin", "Web Hosting", "System Administration", "Domain Configuration", "Nginx"],
     image: "/src/assets/server.png",
     year: 2025,
     complexity: 3,
@@ -339,7 +339,7 @@ const Header: React.FC = () => (
     <div className="title">
       <h1>Projects</h1>
       <p>
-        A curated selection of shipped apps, research builds, and tools. Built
+        A curated selection of projects built in class, through internships, and on my own. Built
         end‑to‑end with a focus on product impact, reliability, and craft.
       </p>
     </div>

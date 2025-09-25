@@ -1,4 +1,5 @@
 import React from "react";
+import profileImage from "/public/assets/profile-image.jpg";
 const AboutPage: React.FC = () => {
   return (
     <main className="about-root">
@@ -38,11 +39,9 @@ const Hero: React.FC = () => (
           </div>
         </div>
       </div>
-
       <div className="hero-portrait" aria-hidden>
-        {/* Swap this with a real image */}
         <div className="portrait-frame">
-          <div className="portrait" />
+          <img src={profileImage} alt="Profile" className="portrait" />
         </div>
       </div>
     </div>
@@ -52,10 +51,10 @@ const Hero: React.FC = () => (
 const QuickFacts: React.FC = () => (
   <section className="facts" aria-label="Quick facts">
     <div className="facts-grid">
-      <Fact kpi="20+" label="Codes coded" />
-      <Fact kpi="1M+" label="Racks I done stacked" />
-      <Fact kpi="80%" label="Of bitches fw it" />
       <Fact kpi="4000+" label="UD Computer Science student users (Sage Discord Bot)" />
+      <Fact kpi="2025" label="Graduating UD Computer Science class" />
+      <Fact kpi="100%" label="Self-Hosted Infrastructure" />
+      <Fact kpi="∞" label="Curiosity & Creativity" />
     </div>
   </section>
 );
@@ -145,24 +144,66 @@ const Skills: React.FC = () => (
     <h2>Skills</h2>
     <div className="skill-columns">
       <SkillColumn
-        title="Languages"
-        items={["TypeScript", "Python", "C/C++", "SQL", "GDScript", "Java"]}
-      />
-      <SkillColumn
-        title="Frameworks & Tools"
-        items={["React/Vite", "Node.js", "Tauri", "Svelte", "Godot 4", "OpenCV"]}
+        title="Languages, Frameworks & Libraries"
+        items={[
+          "TypeScript",
+          "Python",
+          "C/C++",
+          "Java",
+          "SQL",
+          "GDScript",
+          "React/Vite",
+          "Node.js",
+          "Svelte",
+          "Tauri",
+          "Godot 4",
+          "OpenCV"
+        ]}
       />
       <SkillColumn
         title="AI/ML & Data"
-        items={["Embeddings", "HDBSCAN", "NLP", "Recommenders", "Pandas/NumPy", "ETL"]}
+        items={[
+          "Embeddings & NLP",
+          "Recommender Systems",
+          "Collaborative Filtering",
+          "Computer Vision",
+          "Deep Learning",
+          "Image Segmentation",
+          "Stereo Vision (Disparity Mapping)",
+          "Pandas/NumPy",
+          "ETL"
+        ]}
       />
       <SkillColumn
-        title="Platforms & DevOps"
-        items={["Docker", "Git/GitHub", "Linux", "Observability", "CI/CD Basics"]}
+        title="Systems & Platforms"
+        items={[
+          "Docker",
+          "Linux Server Admin",
+          "Nginx",
+          "Self-Hosting",
+          "Tailscale VPN",
+          "System Hardening (UFW, SSH Keys)",
+          "Git/GitHub",
+          "CI/CD Basics"
+        ]}
+      />
+      <SkillColumn
+        title="Cybersecurity & Research"
+        items={[
+          "CAPTCHA Automation & Robustness",
+          "Adversarial Testing",
+          "Secure Configurations",
+          "Network Security",
+          "Observability",
+          "Experiment Design",
+          "Academic Research Collaboration"
+        ]}
       />
     </div>
   </section>
 );
+
+
 
 const SkillColumn: React.FC<{ title: string; items: string[] }> = ({ title, items }) => (
   <div className="skill-col">

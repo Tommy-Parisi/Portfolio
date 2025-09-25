@@ -11,7 +11,7 @@ export default function Home() {
       <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem' }}>
         <div style={{ flex: '0 0 50%', display: 'flex', justifyContent: 'center' }}>
           <img 
-            src="/assets/profile-image.jpg" 
+            src="src/assets/headshot.jpg" 
             alt="Profile" 
             className="rounded-lg shadow-lg w-32 h-auto object-cover"
             style={{ maxWidth: '512px', width: '100%' }}

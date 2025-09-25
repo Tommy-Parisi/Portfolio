@@ -34,7 +34,7 @@ const ContactLinks: React.FC = () => {
   const [phoneCopied, setPhoneCopied] = useState(false);
   
   const email = "tcparisi55@gmail.com";
-  const phone = "(302) 545-7734";
+  const phone = "(315) 949-0106";
 
   const copyEmail = async () => {
     try {
