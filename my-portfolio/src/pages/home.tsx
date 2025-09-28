@@ -1,5 +1,5 @@
 import TypewriterText from "../components/TypewriterText";
-import headshotImage from "/public/assets/headshot.jpg";
+import headshotImage from "/public/assets/profile-image.jpg";
 import "../App.css";
 
 export default function Home() {

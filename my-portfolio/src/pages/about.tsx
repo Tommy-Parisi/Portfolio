@@ -1,5 +1,5 @@
 import React from "react";
-import profileImage from "/public/assets/profile-image.jpg";
+import profileImage from "/public/assets/headshot.jpg";
 const AboutPage: React.FC = () => {
   return (
     <main className="about-root">
