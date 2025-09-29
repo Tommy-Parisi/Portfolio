@@ -1,4 +1,4 @@
-# Thomas C. Parisi — Personal Portfolio 🚀
+# Thomas C. Parisi — Personal Portfolio
 
 > **Live Site**: [tommyparisi.com](https://tommyparisi.com)
 
