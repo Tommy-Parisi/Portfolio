@@ -21,7 +21,7 @@ const Hero: React.FC = () => (
     <div className="hero-grid">
       <div className="hero-copy">
         <div className="eyebrow">About Me</div>
-        <h1>Thomas Parisi</h1>
+        <h2>Thomas Parisi</h2>
         <p className="tagline">
           I am a Senior studying Computer Science at The University of Delaware — AI & Robotics
           concentration, Cybersecurity minor. I am from Syracuse, New York and have spent the last

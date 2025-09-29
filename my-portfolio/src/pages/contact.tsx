@@ -14,7 +14,7 @@ const Hero: React.FC = () => (
   <header className="hero">
     <div className="hero-inner">
       <div className="eyebrow">Contact</div>
-      <h1>Let's connect</h1>
+      <h2>Let's connect</h2>
       <p className="tagline">
         I'm interested in contributing through a <strong>Software Engineering or Cybersecurity </strong>role,
         where I can build and ship impactful features, apply AI and ML, or help secure and protect critical systems.

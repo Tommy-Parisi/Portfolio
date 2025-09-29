@@ -344,7 +344,7 @@ const ProjectsPage: React.FC<{ onNavbarToggle?: { hide: () => void; show: () => 
 const Header: React.FC = () => (
   <header className="header">
     <div className="title">
-      <h1>Projects</h1>
+      <h2>Projects</h2>
       <p>
         A curated selection of projects built in class, through internships, and on my own. Built
         end‑to‑end with a focus on product impact, reliability, and craft.

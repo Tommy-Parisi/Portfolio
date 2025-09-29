@@ -5,15 +5,16 @@ import "../App.css";
 export default function Home() {
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="mb-8">
+      <header className="mb-8">
+        <h1 className="sr-only">Thomas (Tommy) Parisi – Software Developer</h1>
         <TypewriterText></TypewriterText>
-      </div>
+      </header>
       
       <div className="home-layout">
         <div className="image-container">
           <img 
             src={headshotImage}
-            alt="Profile" 
+            alt="Thomas Parisi software developer headshot - University of Delaware Computer Science student" 
             className="rounded-lg shadow-lg w-32 h-auto object-cover profile-image"
           />
         </div>
@@ -46,6 +47,18 @@ export default function Home() {
       </div>
 
       <style>{`
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+        
         .home-layout {
           display: flex;
           flex-direction: row;
