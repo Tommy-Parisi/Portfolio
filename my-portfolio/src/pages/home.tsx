@@ -1,6 +1,7 @@
 import TypewriterText from "../components/TypewriterText";
-import headshotImage from "/public/assets/profile-image.jpg";
 import "../App.css";
+
+const headshotImage = "/assets/profile-image.jpg";
 
 export default function Home() {
   return (

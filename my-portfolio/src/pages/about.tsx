@@ -1,5 +1,7 @@
 import React from "react";
-import profileImage from "/public/assets/headshot.jpg";
+
+const profileImage = "/assets/headshot.jpg";
+
 const AboutPage: React.FC = () => {
   return (
     <main className="about-root">
@@ -52,7 +54,7 @@ const QuickFacts: React.FC = () => (
   <section className="facts" aria-label="Quick facts">
     <div className="facts-grid">
       <Fact kpi="4000+" label="UD Computer Science student users (Sage Discord Bot)" />
-      <Fact kpi="2025" label="Graduating UD Computer Science class" />
+      <Fact kpi="2026" label="Graduating UD Computer Science class" />
       <Fact kpi="100%" label="Self-Hosted Infrastructure" />
       <Fact kpi="∞" label="Curiosity & Creativity" />
     </div>
@@ -71,15 +73,27 @@ const Highlights: React.FC = () => (
     <h2>What I'm Currently Working On</h2>
     <div className="cards">
       <HighlightCard
-        title="FileSort — Smart File Organizer"
-        subtitle="Svelte + Tauri UI · Python embeddings"
+        title="Security Exception System — AI‑Assisted Risk Assessment"
+        subtitle="React + Python · Gemini API · Pinecone RAG"
         bullets={[
-          "Semantic clustering via sentence‑transformers + HDBSCAN",
-          "Human‑in‑the‑loop labeling with sticky clusters",
-          "Cross‑platform desktop app with a clean, resilient UI",
+          "Deterministic risk scoring with LLM‑generated narratives and policy citations",
+          "RAG pipeline with semantic search over UD security policies (300× faster via local caching)",
+          "Dual interface: guided chatbot for users + decision support tool for IT analysts",
         ]}
         links={[
-          //{ label: "GitHub", href: "https://github.com/Tommy-Parisi/FileSorter" },
+          { label: "GitHub", href: "https://github.com/Tommy-Parisi/ExemptionRequestClassifier" },
+        ]}
+      />
+        <HighlightCard
+        title="BiasDetector — Media Bias Analysis Engine"
+        subtitle="C++17 · NLP Pipeline · Design Patterns"
+        bullets={[
+          "4 independent bias signals (sentiment, framing, emotion) via Strategy pattern ensemble",
+          "Full NLP pipeline: tokenization, sentence splitting, NER, sentiment analysis",
+          "Algorithmic confidence scoring based on signal agreement and data sufficiency",
+        ]}
+        links={[
+          { label: "GitHub", href: "https://github.com/Tommy-Parisi/bias-detector" },
         ]}
       />
       <HighlightCard
@@ -89,14 +103,6 @@ const Highlights: React.FC = () => (
           "Host personal portfolio website with custom domain on Ubuntu server",
           "Configured Tailscale VPN, UFW, and key-based SSH for secure remote access",
           "Deployed Dockerized Jellyfin media server for streaming and media management",
-        ]}
-      />
-      <HighlightCard
-        title="UD Information Security AI Development — Senior Capstone"
-        subtitle="Python · AI · Cybersecurity"
-        bullets={[
-          "Working with UD information security department to harden systems",
-          "integrating AI solutions to enhance tasks viable for automation"
         ]}
       />
       <HighlightCard
@@ -225,6 +231,14 @@ const Timeline: React.FC = () => (
       <li>
         <div className="tdate">2025</div>
         <div className="tcontent">
+          <strong>BiasDetector</strong> — C++ media bias detection system using independent statistical signals with Strategy pattern architecture.
+          Built complete NLP pipeline (tokenization, NER, sentiment analysis) producing interpretable bias scores with algorithmic confidence scoring.
+        <div> 
+        </div>
+          <strong>Security Exception System</strong> — Led team as Scrum leader building AI-assisted risk assessment platform for UD IT.
+          Implemented RAG system with Pinecone vector database, deterministic risk scoring engine, and dual-interface system (user chatbot + internal decision tool).
+        <div> 
+        </div>
           <strong>SmartSort</strong> — Implemented HDBSCAN clustering for semantic file sorting.
           Built Svelte + Tauri desktop with Python backend.
         <div> 

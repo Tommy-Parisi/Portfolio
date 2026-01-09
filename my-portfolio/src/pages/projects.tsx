@@ -1,13 +1,16 @@
 import React, { useMemo, useState } from "react";
-import smartSortImage from "/public/assets/SmartSort.png";
-import captchaImage from "/public/assets/captcha.png";
-import serverImage from "/public/assets/server.png";
-import swapbornImage from "/public/assets/Swapborn.png";
-import sageImage from "/public/assets/Sage.png";
-import mosaickImage from "/public/assets/mosaick2.png";
-import stereoRegionImage from "/public/assets/stereo_region.png";
-import sheepSegmentedImage from "/public/assets/Sheep_segmented.png";
-import portfolioImage from "/public/assets/portfolio.png";
+
+const smartSortImage = "/assets/SmartSort.png";
+const captchaImage = "/assets/captcha.png";
+const serverImage = "/assets/server.png";
+const swapbornImage = "/assets/Swapborn.png";
+const sageImage = "/assets/Sage.png";
+const mosaickImage = "/assets/mosaick2.png";
+const stereoRegionImage = "/assets/stereo_region.png";
+const sheepSegmentedImage = "/assets/Sheep_segmented.png";
+const portfolioImage = "/assets/portfolio.png";
+const securityExceptionImage = "/assets/security_exception.png";
+const biasDetectorImage = "/assets/bias_detector.png";
 
 // ----------------------------- Types ---------------------------------------
 
@@ -34,6 +37,46 @@ type Project = {
 
 const PROJECTS: Project[] = [
   // Full-Stack Personal Projects 
+  {
+    id: "security-exception-system",
+    title: "Automated Security Exception Risk Assessment System",
+    subtitle: "React · Python · Gemini API · Pinecone",
+    description:
+      "AI-assisted security policy exception request system for UD Information Technology, featuring a guided chatbot interface and deterministic risk assessment engine with LLM-enhanced analysis",
+    highlights: [
+      "Led team as Scrum leader through full development lifecycle",
+      "Implemented RAG system with Pinecone vector database for policy retrieval and semantic search",
+      "Built deterministic risk scoring engine - LLMs generate narratives only, not risk decisions",
+      "Developed dual-interface system: user-facing chatbot and internal decision support tool",
+      "Achieved 300x faster policy lookups through local embedding caching",
+    ],
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Python", "Gemini Pro API", "Pinecone", "TDX API"],
+    image: securityExceptionImage,
+    year: 2025,
+    complexity: 5,
+    links: [ { label: "GitHub", href: "https://github.com/Tommy-Parisi/ExemptionRequestClassifier" } ],
+  },
+  {
+    id: "bias-detector",
+    title: "BiasDetector — Media Bias Analysis Engine",
+    subtitle: "C++17 · CMake · NLP",
+    description:
+      "Production-grade C++ system that detects and quantifies media bias in news articles using 4 independent statistical signals aggregated through weighted ensemble methods",
+    highlights: [
+      "Architected using SOLID principles with Strategy pattern for pluggable bias detection signals",
+      "Built complete NLP pipeline: tokenization, sentence splitting, NER, and sentiment analysis",
+      "Implemented 4 bias signals: outlet reputation, entity sentiment, policy framing, emotional intensity",
+      "Developed algorithmic confidence scoring based on signal agreement and data quantity",
+      "Produces interpretable -1.0 to +1.0 bias scores with per-signal explanations",
+      "~1,200 lines of modular, testable C++17 demonstrating clean architecture principles",
+    ],
+    tech: ["C++17", "CMake", "NLP", "Design Patterns"],
+    image: biasDetectorImage,
+    year: 2025,
+    complexity: 5,
+    links: [ { label: "GitHub", href: "https://github.com/Tommy-Parisi/bias-detector" },
+    ],
+  },
   {
     id: "filesort",
     title: "FileSort — Semantic File Organizer",
