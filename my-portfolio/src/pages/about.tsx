@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const profileImage = "/assets/profile-image.jpg";
 
@@ -301,7 +302,7 @@ const CTA: React.FC = () => {
         </p>
         <div className="ab-row">
           <a className="btn-solid" href="mailto:tcparisi55@gmail.com">Get in touch</a>
-          <a className="btn-ghost" href="/projects">View my projects</a>
+          <Link className="btn-ghost" to="/projects">View my projects</Link>
         </div>
       </div>
     </section>

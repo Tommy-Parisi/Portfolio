@@ -1,4 +1,5 @@
 import TypewriterText from "../components/TypewriterText";
+import { Link } from "react-router-dom";
 import "../App.css";
 
 export default function Home() {
@@ -27,12 +28,12 @@ export default function Home() {
         </p>
 
         <div className="home-cta">
-          <a href="/projects" className="btn-ghost no-select">
+          <Link to="/projects" className="btn-ghost no-select">
             Explore My Work <span aria-hidden="true">→</span>
-          </a>
-          <a href="/contact" className="btn-solid no-select">
+          </Link>
+          <Link to="/contact" className="btn-solid no-select">
             Get in touch
-          </a>
+          </Link>
         </div>
       </div>
 

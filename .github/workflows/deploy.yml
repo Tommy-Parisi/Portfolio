@@ -33,6 +33,9 @@ jobs:
         working-directory: ./my-portfolio
         run: npm run build
 
+      - name: Add SPA fallback for GitHub Pages
+        run: cp ./my-portfolio/dist/index.html ./my-portfolio/dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

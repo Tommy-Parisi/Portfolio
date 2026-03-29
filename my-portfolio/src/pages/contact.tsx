@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 // ----------------------------- Scroll animation hook -----------------------
 
@@ -146,7 +147,7 @@ const ContactLinks: React.FC = () => {
         </a>
 
         {/* Projects */}
-        <a href="/projects" className="ct-card glass-card fade-up" style={{ transitionDelay: '300ms' }}>
+        <Link to="/projects" className="ct-card glass-card fade-up" style={{ transitionDelay: '300ms' }}>
           <div className="ct-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
@@ -158,7 +159,7 @@ const ContactLinks: React.FC = () => {
             <h3>Projects</h3>
             <p>View my work</p>
           </div>
-        </a>
+        </Link>
       </div>
     </section>
   );
