@@ -1,142 +1,180 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-const profileImage = "/assets/headshot.jpg";
+const profileImage = "/assets/profile-image.jpg";
 
-const AboutPage: React.FC = () => {
-  return (
-    <main className="about-root">
-      <Hero />
-      <QuickFacts />
-      <Highlights />
-      <Skills />
-      <Timeline />
-      <CTA />
-      <style>{styles}</style>
-    </main>
-  );
-};
+// ----------------------------- Scroll animation hook -----------------------
 
-// ------------------------------ Sections -----------------------------------
+function useSectionAnimation() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const items = el.querySelectorAll<HTMLElement>('.fade-up');
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.08 }
+    );
+    items.forEach(i => observer.observe(i));
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
 
-const Hero: React.FC = () => (
-  <header className="hero">
-    <div className="hero-grid">
-      <div className="hero-copy">
-        <div className="eyebrow">About Me</div>
-        <h2>Thomas Parisi</h2>
-        <p className="tagline">
-          I am a Senior studying Computer Science at The University of Delaware — AI & Robotics
-          concentration, Cybersecurity minor. I am from Syracuse, New York and have spent the last
-          four years in northern Delaware. I am willing to relocate for a position, but would also love 
-          to work in Philadelphia, Syracuse, Chicago, or New York City. My dream is to work as a Game Developer 
-          or Software Engineer for whoever I can help!
-        </p>
-        <div className="hero-cta">
-          <a className="button" href="/resume.pdf" target="_blank" rel="noreferrer">Download Resume</a>
-          <a className="button button--ghost" href="mailto:thomas.parisi@example.com">Email Me</a>
-          <div className="hero-links">
-            <a href="https://github.com/Tommy-Parisi" target="_blank" rel="noreferrer" aria-label="GitHub">GitHub ↗</a>
-            <span>·</span>
-            <a href="https://www.linkedin.com/in/thomas-parisi-771a76261/" target="_blank" rel="noreferrer" aria-label="LinkedIn">LinkedIn ↗</a>
-          </div>
-        </div>
-      </div>
-      <div className="hero-portrait" aria-hidden>
-        <div className="portrait-frame">
-          <img src={profileImage} alt="Profile" className="portrait" />
-        </div>
-      </div>
-    </div>
-  </header>
-);
+// ----------------------------- Page ---------------------------------------
 
-const QuickFacts: React.FC = () => (
-  <section className="facts" aria-label="Quick facts">
-    <div className="facts-grid">
-      <Fact kpi="4000+" label="UD Computer Science student users (Sage Discord Bot)" />
-      <Fact kpi="2026" label="Graduating UD Computer Science class" />
-      <Fact kpi="100%" label="Self-Hosted Infrastructure" />
-      <Fact kpi="∞" label="Curiosity & Creativity" />
-    </div>
-  </section>
-);
-
-const Fact: React.FC<{ kpi: string; label: string }> = ({ kpi, label }) => (
-  <div className="fact">
-    <div className="kpi">{kpi}</div>
-    <div className="kpi-label">{label}</div>
+const AboutPage: React.FC = () => (
+  <div className="ab-root">
+    <Hero />
+    <QuickFacts />
+    <Highlights />
+    <Skills />
+    <Timeline />
+    <CTA />
+    <style>{styles}</style>
   </div>
 );
 
-const Highlights: React.FC = () => (
-  <section className="highlights" aria-label="Experience highlights">
-    <h2>What I'm Currently Working On</h2>
-    <div className="cards">
-      <HighlightCard
-        title="Security Exception System — AI‑Assisted Risk Assessment"
-        subtitle="React + Python · Gemini API · Pinecone RAG"
-        bullets={[
-          "Deterministic risk scoring with LLM‑generated narratives and policy citations",
-          "RAG pipeline with semantic search over UD security policies (300× faster via local caching)",
-          "Dual interface: guided chatbot for users + decision support tool for IT analysts",
-        ]}
-        links={[
-          { label: "GitHub", href: "https://github.com/Tommy-Parisi/ExemptionRequestClassifier" },
-        ]}
-      />
-        <HighlightCard
-        title="BiasDetector — Media Bias Analysis Engine"
-        subtitle="C++17 · NLP Pipeline · Design Patterns"
-        bullets={[
-          "4 independent bias signals (sentiment, framing, emotion) via Strategy pattern ensemble",
-          "Full NLP pipeline: tokenization, sentence splitting, NER, sentiment analysis",
-          "Algorithmic confidence scoring based on signal agreement and data sufficiency",
-        ]}
-        links={[
-          { label: "GitHub", href: "https://github.com/Tommy-Parisi/bias-detector" },
-        ]}
-      />
-      <HighlightCard
-        title="Self-Hosted Home Server"
-        subtitle="Ubuntu · Tailscale · Docker · Jellyfin"
-        bullets={[
-          "Host personal portfolio website with custom domain on Ubuntu server",
-          "Configured Tailscale VPN, UFW, and key-based SSH for secure remote access",
-          "Deployed Dockerized Jellyfin media server for streaming and media management",
-        ]}
-      />
-      <HighlightCard
-        title="Current Coursework"
-        subtitle="Networks · Cybersecurity · Machine Learning · System Hardening"
-        bullets={[
-          "Study networks, protocols, and end-to-end communication analysis",
-          "Explore reverse engineering and penetration testing to identify vulnerabilities",
-          "Learn machine learning techniques for classification and regression",
-          "Apply system hardening and protection strategies to secure environments",
-        ]}
-      />
-    </div>
-  </section>
+// ----------------------------- Sections -----------------------------------
+
+const Hero: React.FC = () => {
+  const ref = useSectionAnimation();
+  return (
+    <header className="ab-hero" ref={ref as React.RefObject<HTMLElement>}>
+      <div className="ab-hero-grid">
+        <div className="ab-hero-copy fade-up">
+          <span className="ab-eyebrow">About Me</span>
+          <h2 className="ab-hero-name">Thomas Parisi</h2>
+          <p className="ab-hero-tagline">
+            I am a Senior studying Computer Science at The University of Delaware — AI &amp; Robotics
+            concentration, Cybersecurity minor. From Syracuse, NY. Open to relocating — Philadelphia,
+            Chicago, NYC, or Syracuse are all appealing. My dream is to work as a Game Developer or
+            Software Engineer for whoever I can help.
+          </p>
+          <div className="ab-hero-cta">
+            <a className="btn-solid" href="/resume.pdf" target="_blank" rel="noreferrer">
+              Download Resume
+            </a>
+            <a className="btn-ghost" href="mailto:tcparisi55@gmail.com">
+              Email Me
+            </a>
+            <div className="ab-hero-links">
+              <a href="https://github.com/Tommy-Parisi" target="_blank" rel="noreferrer">GitHub ↗</a>
+              <span aria-hidden>·</span>
+              <a href="https://www.linkedin.com/in/thomas-parisi-771a76261/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="ab-hero-portrait fade-up" style={{ transitionDelay: '120ms' }}>
+          <div className="ab-portrait-frame">
+            <img src={profileImage} alt="Thomas Parisi" className="ab-portrait" />
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+const QuickFacts: React.FC = () => {
+  const ref = useSectionAnimation();
+  return (
+    <section className="ab-facts" aria-label="Quick facts" ref={ref as React.RefObject<HTMLElement>}>
+      <div className="ab-facts-grid">
+        <Fact kpi="4000+" label="UD Computer Science student users (Sage Discord Bot)" index={0} />
+        <Fact kpi="2026"  label="Graduating UD Computer Science class"                  index={1} />
+        <Fact kpi="100%"  label="Self-Hosted Infrastructure"                             index={2} />
+        <Fact kpi="∞"     label="Curiosity &amp; Creativity"                             index={3} />
+      </div>
+    </section>
+  );
+};
+
+const Fact: React.FC<{ kpi: string; label: string; index: number }> = ({ kpi, label, index }) => (
+  <div className="ab-fact fade-up glass-card" style={{ transitionDelay: `${index * 80}ms` }}>
+    <div className="ab-kpi">{kpi}</div>
+    <div className="ab-kpi-label">{label}</div>
+  </div>
 );
+
+const Highlights: React.FC = () => {
+  const ref = useSectionAnimation();
+  return (
+    <section className="ab-section" aria-label="Current work" ref={ref as React.RefObject<HTMLElement>}>
+      <h2 className="ab-section-title fade-up">What I'm Currently Working On</h2>
+      <div className="ab-cards">
+        <HighlightCard
+          index={0}
+          title="Security Exception System — AI‑Assisted Risk Assessment"
+          subtitle="React + Python · Gemini API · Pinecone RAG"
+          bullets={[
+            "Deterministic risk scoring with LLM‑generated narratives and policy citations",
+            "RAG pipeline with semantic search over UD security policies (300× faster via local caching)",
+            "Dual interface: guided chatbot for users + decision support tool for IT analysts",
+          ]}
+          links={[{ label: "GitHub", href: "https://github.com/Tommy-Parisi/ExemptionRequestClassifier" }]}
+        />
+        <HighlightCard
+          index={1}
+          title="BiasDetector — Media Bias Analysis Engine"
+          subtitle="C++17 · NLP Pipeline · Design Patterns"
+          bullets={[
+            "4 independent bias signals (sentiment, framing, emotion) via Strategy pattern ensemble",
+            "Full NLP pipeline: tokenization, sentence splitting, NER, sentiment analysis",
+            "Algorithmic confidence scoring based on signal agreement and data sufficiency",
+          ]}
+          links={[{ label: "GitHub", href: "https://github.com/Tommy-Parisi/bias-detector" }]}
+        />
+        <HighlightCard
+          index={2}
+          title="Self-Hosted Home Server"
+          subtitle="Ubuntu · Tailscale · Docker · Jellyfin"
+          bullets={[
+            "Host personal portfolio website with custom domain on Ubuntu server",
+            "Configured Tailscale VPN, UFW, and key-based SSH for secure remote access",
+            "Deployed Dockerized Jellyfin media server for streaming and media management",
+          ]}
+        />
+        <HighlightCard
+          index={3}
+          title="Current Coursework"
+          subtitle="Networks · Cybersecurity · Machine Learning · System Hardening"
+          bullets={[
+            "Study networks, protocols, and end-to-end communication analysis",
+            "Explore reverse engineering and penetration testing to identify vulnerabilities",
+            "Apply system hardening and protection strategies to secure environments",
+          ]}
+        />
+      </div>
+    </section>
+  );
+};
 
 const HighlightCard: React.FC<{
   title: string;
   subtitle?: string;
   bullets: string[];
   links?: { label: string; href: string }[];
-}> = ({ title, subtitle, bullets, links }) => (
-  <article className="hcard">
-    <h3>{title}</h3>
-    {subtitle && <p className="muted">{subtitle}</p>}
-    <ul>
-      {bullets.map((b, i) => (
-        <li key={i}>{b}</li>
-      ))}
+  index: number;
+}> = ({ title, subtitle, bullets, links, index }) => (
+  <article
+    className="ab-hcard glass-card fade-up"
+    style={{ transitionDelay: `${index * 80}ms` }}
+  >
+    <div className="ab-hcard-accent" />
+    <h3 className="ab-hcard-title">{title}</h3>
+    {subtitle && <p className="ab-muted">{subtitle}</p>}
+    <ul className="ab-hcard-list">
+      {bullets.map((b, i) => <li key={i}>{b}</li>)}
     </ul>
     {links && (
-      <div className="links">
-        {links.map((l) => (
-          <a key={l.href} className="button button--ghost" href={l.href} target="_blank" rel="noreferrer">
+      <div className="ab-row">
+        {links.map(l => (
+          <a key={l.href} className="btn-ghost" href={l.href} target="_blank" rel="noreferrer">
             {l.label}
           </a>
         ))}
@@ -145,230 +183,455 @@ const HighlightCard: React.FC<{
   </article>
 );
 
-const Skills: React.FC = () => (
-  <section className="skills" aria-label="Skills">
-    <h2>Skills</h2>
-    <div className="skill-columns">
-      <SkillColumn
-        title="Languages, Frameworks & Libraries"
-        items={[
-          "TypeScript",
-          "Python",
-          "C/C++",
-          "Java",
-          "SQL",
-          "GDScript",
-          "React/Vite",
-          "Node.js",
-          "Svelte",
-          "Tauri",
-          "Godot 4",
-          "OpenCV"
-        ]}
-      />
-      <SkillColumn
-        title="AI/ML & Data"
-        items={[
-          "Embeddings & NLP",
-          "Recommender Systems",
-          "Collaborative Filtering",
-          "Computer Vision",
-          "Deep Learning",
-          "Image Segmentation",
-          "Stereo Vision (Disparity Mapping)",
-          "Pandas/NumPy",
-          "ETL"
-        ]}
-      />
-      <SkillColumn
-        title="Systems & Platforms"
-        items={[
-          "Docker",
-          "Linux Server Admin",
-          "Nginx",
-          "Self-Hosting",
-          "Tailscale VPN",
-          "System Hardening (UFW, SSH Keys)",
-          "Git/GitHub",
-          "CI/CD Basics"
-        ]}
-      />
-      <SkillColumn
-        title="Cybersecurity & Research"
-        items={[
-          "CAPTCHA Automation & Robustness",
-          "Adversarial Testing",
-          "Secure Configurations",
-          "Network Security",
-          "Observability",
-          "Experiment Design",
-          "Academic Research Collaboration"
-        ]}
-      />
-    </div>
-  </section>
-);
+const Skills: React.FC = () => {
+  const ref = useSectionAnimation();
+  return (
+    <section className="ab-section" aria-label="Skills" ref={ref as React.RefObject<HTMLElement>}>
+      <h2 className="ab-section-title fade-up">Skills</h2>
+      <div className="ab-skill-grid">
+        <SkillColumn index={0} title="Languages, Frameworks & Libraries" items={[
+          "TypeScript","Python","C/C++","Java","SQL","GDScript",
+          "React/Vite","Node.js","Svelte","Tauri","Godot 4","OpenCV",
+        ]} />
+        <SkillColumn index={1} title="AI/ML & Data" items={[
+          "Embeddings & NLP","Recommender Systems","Collaborative Filtering",
+          "Computer Vision","Deep Learning","Image Segmentation",
+          "Stereo Vision (Disparity Mapping)","Pandas/NumPy","ETL",
+        ]} />
+        <SkillColumn index={2} title="Systems & Platforms" items={[
+          "Docker","Linux Server Admin","Nginx","Self-Hosting",
+          "Tailscale VPN","System Hardening (UFW, SSH Keys)","Git/GitHub","CI/CD Basics",
+        ]} />
+        <SkillColumn index={3} title="Cybersecurity & Research" items={[
+          "CAPTCHA Automation & Robustness","Adversarial Testing","Secure Configurations",
+          "Network Security","Observability","Experiment Design","Academic Research Collaboration",
+        ]} />
+      </div>
+    </section>
+  );
+};
 
-
-
-const SkillColumn: React.FC<{ title: string; items: string[] }> = ({ title, items }) => (
-  <div className="skill-col">
-    <h4>{title}</h4>
-    <div className="chips">
-      {items.map((i) => (
-        <span key={i} className="chip">
-          {i}
-        </span>
-      ))}
+const SkillColumn: React.FC<{ title: string; items: string[]; index: number }> = ({ title, items, index }) => (
+  <div
+    className="ab-skill-col glass-card fade-up"
+    style={{ transitionDelay: `${index * 80}ms` }}
+  >
+    <h4 className="ab-skill-title">{title}</h4>
+    <div className="ab-chips">
+      {items.map(i => <span key={i} className="chip">{i}</span>)}
     </div>
   </div>
 );
 
-const Timeline: React.FC = () => (
-  <section className="timeline" aria-label="Timeline">
-    <h2>Path so far</h2>
-    <ol className="tlist">
-      <li>
-        <div className="tdate">2025</div>
-        <div className="tcontent">
-          <strong>BiasDetector</strong> — C++ media bias detection system using independent statistical signals with Strategy pattern architecture.
-          Built complete NLP pipeline (tokenization, NER, sentiment analysis) producing interpretable bias scores with algorithmic confidence scoring.
-        <div> 
-        </div>
-          <strong>Security Exception System</strong> — Led team as Scrum leader building AI-assisted risk assessment platform for UD IT.
-          Implemented RAG system with Pinecone vector database, deterministic risk scoring engine, and dual-interface system (user chatbot + internal decision tool).
-        <div> 
-        </div>
-          <strong>SmartSort</strong> — Implemented HDBSCAN clustering for semantic file sorting.
-          Built Svelte + Tauri desktop with Python backend.
-        <div> 
-        </div>
-          <strong>CaptchaCracker</strong> — Research project with University of Alabama in Huntsville VIVID virtual internship.
-          Built and evaluated automated puzzle‑based CAPTCHA detection and interaction pipelines using YOLO, OpenCV, and Selenium.
-        </div>
-      </li>
-      <li>
-        <div className="tdate">2024</div>
-        <div className="tcontent">
-          <strong>University of Delaware</strong> — Advanced coursework across
-          Computer Vision (CISC 442), Data Mining, OS (custom shell), and DB
-          systems (Oracle). Led multiple team projects.
-        <div>
-        </div>
-        <strong>UD Game Development Club</strong> — Built a simple 2D platformer game for a Game Jam. Swapborn 
-        is a simple puzzle platformer with a death-swap mechanic where the player trades positions with the closest NPC upon death.
-        </div>
-      </li>
-      <li>
-        <div className="tdate">2023</div>
-        <div className="tcontent">
-          <strong>SageTeamX Discord Bot</strong> — I worked to implement a "/calendar" command that integrates with Google Calendar to fetch and display upcoming events.
-          The bot is used in the UD Computer Science discord server by 4000+ students.
-        </div>
-      </li>
-      <li>
-        <div className="tdate">2022</div>
-        <div className="tcontent">
-          <strong>University of Delaware</strong> — Began core Computer Science curriculum in 
-          datastructures, algorithms, OOP, and web development. Built small apps and games including 
-          three card poker and a chess simulator with custom mechanics.
-        </div>
-      </li>
-    </ol>
-  </section>
-);
+const Timeline: React.FC = () => {
+  const ref = useSectionAnimation();
+  return (
+    <section className="ab-section" aria-label="Timeline" ref={ref as React.RefObject<HTMLElement>}>
+      <h2 className="ab-section-title fade-up">Path So Far</h2>
+      <ol className="ab-timeline">
+        {[
+          {
+            year: "2025",
+            content: (
+              <>
+                <strong>BiasDetector</strong> — C++ media bias detection using independent statistical
+                signals with Strategy pattern architecture. Complete NLP pipeline producing interpretable bias scores.
+                <br /><br />
+                <strong>Security Exception System</strong> — Scrum leader building AI-assisted risk assessment
+                for UD IT. RAG system with Pinecone, deterministic risk scoring, and dual-interface system.
+                <br /><br />
+                <strong>FileSort</strong> — HDBSCAN clustering for semantic file sorting. Svelte + Tauri desktop with Python backend.
+                <br /><br />
+                <strong>CaptchaCracker</strong> — Research with VIVID / UAH. YOLO, OpenCV, and Selenium pipeline
+                for CAPTCHA detection and interaction.
+              </>
+            ),
+          },
+          {
+            year: "2024",
+            content: (
+              <>
+                <strong>University of Delaware</strong> — Advanced coursework: Computer Vision (CISC 442),
+                Data Mining, OS (custom shell), and DB systems. Led multiple team projects.
+                <br /><br />
+                <strong>UD Game Development Club</strong> — Built Swapborn, a 2D puzzle platformer for a
+                Game Jam featuring a death-swap mechanic.
+              </>
+            ),
+          },
+          {
+            year: "2023",
+            content: (
+              <>
+                <strong>SageTeamX Discord Bot</strong> — Implemented /calendar command integrating
+                Google Calendar. Bot serves 4000+ students in the UD CS Discord.
+              </>
+            ),
+          },
+          {
+            year: "2022",
+            content: (
+              <>
+                <strong>University of Delaware</strong> — Core CS curriculum: data structures, algorithms,
+                OOP, and web development. Built three-card poker and a chess simulator.
+              </>
+            ),
+          },
+        ].map(({ year, content }, i) => (
+          <li key={year} className="ab-tl-item fade-up" style={{ transitionDelay: `${i * 100}ms` }}>
+            <div className="ab-tl-dot" />
+            <div className="ab-tl-year">{year}</div>
+            <div className="ab-tl-content">{content}</div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+};
 
-const CTA: React.FC = () => (
-  <section className="cta" aria-label="Contact">
-    <div className="cta-card">
-      <h2>Let’s build something great</h2>
-      <p className="muted">
-        Open to Software Engineering internships and new‑grad roles where I can
-        ship product, own reliability, and apply ML thoughtfully.
-      </p>
-      <div className="links">
-        <a className="button" href="mailto:thomas.parisi@example.com">Get in touch</a>
-        <a className="button button--ghost" href="/Projects">View my projects</a>
+const CTA: React.FC = () => {
+  const ref = useSectionAnimation();
+  return (
+    <section className="ab-section" aria-label="Contact" ref={ref as React.RefObject<HTMLElement>}>
+      <div className="ab-cta glass-card fade-up">
+        <h2 className="ab-cta-title">Let's build something great</h2>
+        <p className="ab-muted">
+          Open to Software Engineering internships and new-grad roles where I can ship product,
+          own reliability, and apply ML thoughtfully.
+        </p>
+        <div className="ab-row">
+          <a className="btn-solid" href="mailto:tcparisi55@gmail.com">Get in touch</a>
+          <a className="btn-ghost" href="/projects">View my projects</a>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
-// ------------------------------- Styles ------------------------------------
+// ----------------------------- Styles -------------------------------------
 
 const styles = `
-:root{
-  --bg: #0b0d12; --surface:#10131a; --muted:#9aa3b2; --text:#e8ecf2;
-  --brand:#63b3ff; --ring:#3b82f6; --shadow:0 10px 30px rgba(0,0,0,.4);
-  --chip:#1b2230; --chipText:#c9d4e3; --radius:16px;
+.ab-root {
+  color: #e8ecf2;
+  min-height: 100vh;
+  padding-bottom: 5rem;
 }
-*{box-sizing:border-box}
-.about-root{color:var(--text); background: radial-gradient(1200px 600px at 10% -10%, rgba(99,179,255,.08), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(99,255,210,.06), transparent 60%), var(--bg); min-height:100vh}
 
 /* Hero */
-.hero{max-width:1500px;margin:0 auto;padding:72px 24px 24px}
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
-@media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:18px}}
-.eyebrow{color:#b9c7dd;letter-spacing:.18em;text-transform:uppercase;font-size:12px;margin-bottom:8px}
-.hero-copy h1{font-size:44px;line-height:1.05;margin:0 0 8px}
-.hero-copy .tagline{color:#cdd6e6;font-size:18px;line-height:1.55;margin:0}
-.hero-copy em{font-style:normal;color:#bfe2ff}
-.hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
-.hero-links a{color:#cfe0ff;text-decoration:none}
-.hero-links span{opacity:.5;margin:0 6px}
+.ab-hero {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 4rem 2rem 2rem;
+}
 
-.hero-portrait{display:grid;place-items:center}
-.portrait-frame{width:min(440px,100%);aspect-ratio:4/5;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid #1b2230;border-radius:20px;box-shadow:var(--shadow);padding:14px}
-.portrait{width:100%;height:100%;border-radius:14px;background:repeating-linear-gradient(45deg,#0f1520,#0f1520 10px,#0d121b 10px,#0d121b 20px)}
+.ab-hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 3rem;
+  align-items: center;
+}
 
-/* Buttons */
-.button{background:linear-gradient(180deg,#2b63d9,#1b4ab8); border:1px solid #2f55c8; color:white; padding:10px 12px; border-radius:10px; font-weight:600; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px}
-.button:hover{filter:brightness(1.05)}
-.button--ghost{background:transparent;border:1px solid #24314a;color:#dbe8ff}
-.button--ghost:hover{background:#0f1726}
+@media (max-width: 900px) {
+  .ab-hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .ab-hero-portrait { order: -1; }
+}
 
-/* Quick Facts */
-.facts{max-width:1500px;margin:12px auto 24px;padding:0 24px}
-.facts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media(max-width:880px){.facts-grid{grid-template-columns:repeat(2,1fr)}}
-.fact{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)); border:1px solid #1b2230; border-radius:14px; padding:16px; text-align:center}
-.kpi{font-size:26px;font-weight:700}
-.kpi-label{color:var(--muted);font-size:13px}
+.ab-eyebrow {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #63b3ff;
+  display: block;
+  margin-bottom: 12px;
+}
 
-/* Highlights */
-.highlights{max-width:1500px;margin:24px auto;padding:0 24px}
-.highlights h2{margin:0 0 12px;font-size:24px}
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-@media(max-width:880px){.cards{grid-template-columns:1fr}}
-.hcard{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)); border:1px solid #1b2230; border-radius:16px; padding:16px; box-shadow:var(--shadow)}
-.hcard h3{margin:0 0 4px;font-size:18px}
-.muted{color:var(--muted);margin:0 0 8px}
-.hcard ul{margin:0 0 8px 18px;line-height:1.45}
-.links{display:flex;flex-wrap:wrap;gap:8px}
+.ab-hero-name {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #e8ecf2;
+  margin: 0 0 12px;
+  line-height: 1.1;
+}
+
+.ab-hero-tagline {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1rem;
+  color: rgba(232,236,242,0.65);
+  line-height: 1.65;
+  margin: 0;
+  max-width: 560px;
+}
+
+.ab-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.ab-hero-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.9rem;
+}
+
+.ab-hero-links a { color: rgba(99,179,255,0.8); }
+.ab-hero-links a:hover { color: #63b3ff; opacity: 1; }
+.ab-hero-links span { color: #374151; }
+
+.ab-hero-portrait {
+  display: grid;
+  place-items: center;
+}
+
+.ab-portrait-frame {
+  width: min(340px, 100%);
+  aspect-ratio: 4/5;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 1px rgba(99,179,255,0.10), 0 16px 48px rgba(0,0,0,0.70);
+}
+
+.ab-portrait {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Shared section wrapper */
+.ab-section {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 0;
+}
+
+.ab-section-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: #e8ecf2;
+  margin: 0 0 1.25rem;
+}
+
+/* Quick facts */
+.ab-facts {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 0;
+}
+
+.ab-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 900px) { .ab-facts-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .ab-facts-grid { grid-template-columns: 1fr 1fr; } }
+
+.ab-fact {
+  padding: 1.25rem;
+  text-align: center;
+  /* glass-card hover lifts — override to subtle for stat cards */
+}
+
+.ab-fact:hover {
+  transform: translateY(-2px);
+}
+
+.ab-kpi {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #63b3ff;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ab-kpi-label {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* Highlight cards */
+.ab-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 900px) { .ab-cards { grid-template-columns: 1fr; } }
+
+.ab-hcard {
+  padding: 1.25rem 1.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top-edge accent bar */
+.ab-hcard-accent {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #63b3ff, rgba(99,179,255,0.2));
+  border-radius: 16px 16px 0 0;
+}
+
+.ab-hcard-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e8ecf2;
+  margin: 0 0 4px;
+}
+
+.ab-muted {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+
+.ab-hcard-list {
+  margin: 0 0 12px 1.1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ab-hcard-list li {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: rgba(232,236,242,0.70);
+  line-height: 1.5;
+}
 
 /* Skills */
-.skills{max-width:1500px;margin:24px auto;padding:0 24px}
-.skills h2{margin:0 0 12px;font-size:24px}
-.skill-columns{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-@media(max-width:880px){.skill-columns{grid-template-columns:repeat(2,1fr)}}
-.skill-col{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)); border:1px solid #1b2230; border-radius:14px; padding:14px}
-.skill-col h4{margin:0 0 8px;font-size:14px;letter-spacing:.3px;color:#a9b5c9;text-transform:uppercase}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{background:#121926;color:#c7d2e6;border:1px solid #1c2333;border-radius:8px;padding:4px 8px;font-size:12px}
+.ab-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1024px) { .ab-skill-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px)  { .ab-skill-grid { grid-template-columns: 1fr; } }
+
+.ab-skill-col {
+  padding: 1.25rem;
+}
+
+.ab-skill-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0 0 12px;
+}
+
+.ab-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
 
 /* Timeline */
-.timeline{max-width:1500px;margin:24px auto;padding:0 24px}
-.timeline h2{margin:0 0 12px;font-size:24px}
-.tlist{list-style:none;margin:0;padding:0;border-left:2px solid #1f2a3d}
-.tlist li{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:12px 0 12px 12px}
-@media(max-width:640px){.tlist li{grid-template-columns:1fr}}
-.tdate{color:#a9b5c9;font-weight:600}
-.tcontent{color:#c7cfdb}
+.ab-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.ab-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, #63b3ff, rgba(99,179,255,0.1));
+  border-radius: 2px;
+}
+
+.ab-tl-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+  padding: 0 0 2rem 2rem;
+  position: relative;
+}
+
+@media (max-width: 600px) {
+  .ab-tl-item { grid-template-columns: 60px 1fr; gap: 0.75rem; }
+}
+
+.ab-tl-dot {
+  position: absolute;
+  left: 1px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #000;
+  border: 2px solid #63b3ff;
+  box-shadow: 0 0 8px rgba(99,179,255,0.4);
+}
+
+.ab-tl-year {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #63b3ff;
+  padding-top: 2px;
+}
+
+.ab-tl-content {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: rgba(232,236,242,0.70);
+  line-height: 1.6;
+}
+
+.ab-tl-content strong { color: #e8ecf2; font-weight: 600; }
 
 /* CTA */
-.cta{max-width:1500px;margin:32px auto 56px;padding:0 24px}
-.cta-card{background:linear-gradient(180deg, rgba(99,179,255,.08), rgba(99,179,255,.02)); border:1px solid #1b2230; border-radius:20px; padding:22px; text-align:center; box-shadow:var(--shadow)}
-.cta-card h2{margin:0 0 8px}
+.ab-cta {
+  padding: 2rem 2.5rem;
+  text-align: center;
+}
+
+.ab-cta-title {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 700;
+  color: #e8ecf2;
+  margin: 0 0 10px;
+}
+
+.ab-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .ab-hero, .ab-section, .ab-facts { padding-left: 1rem; padding-right: 1rem; }
+}
 `;
 
 export default AboutPage;
