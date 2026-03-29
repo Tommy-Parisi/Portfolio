@@ -11,8 +11,9 @@ A modern, responsive portfolio website built with React and TypeScript, showcasi
 ## Features
 
 - **Interactive Typewriter Animation** - Dynamic text highlighting education and specializations
-- **Fully Responsive Design** - Mobile-first approach with hamburger navigation
-- **Modern UI/UX** - Clean, professional design with smooth animations
+- **Visual System** - Reusable glass-style cards, buttons, chips, and motion patterns
+- **Project Discovery UX** - Search, technology filters, sort controls, and project detail modals
+- **Fully Responsive Design** - Mobile-first layouts and touch-friendly controls
 - **Lightning Fast** - Built with Vite for optimal performance
 - **Self-Hosted** - Deployed on personal Ubuntu server infrastructure
 - **Audio Enhancement** - Realistic typewriter sound effects with mute toggle
@@ -154,7 +155,7 @@ scp -r dist/ user@server:/var/www/portfolio/
 
 ## Design Philosophy
 
-- **Minimalist Aesthetic** - Clean, professional layout focusing on content
+- **Intentional Visual Identity** - Glassmorphism-inspired surfaces with contrast-first readability
 - **Performance First** - Optimized images, lazy loading, efficient bundling
 - **Accessibility** - Semantic HTML, ARIA labels, keyboard navigation
 - **Mobile Responsive** - Hamburger menu, flexible layouts, touch-friendly
@@ -199,24 +200,9 @@ This project uses the following open-source fonts under the SIL Open Font Licens
 
 ### Assets
 
-- **Typewriter Sound Effect** - Custom audio enhancement for interactive elements
 - **Project Images** - Screenshots and media from personal projects and coursework
 
 All fonts are used in compliance with their respective licenses. The SIL Open Font License allows for free use, modification, and distribution of these fonts in both personal and commercial projects.
-
----
-
-## Contributing
-
-While this is a personal portfolio, I welcome feedback and suggestions:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/improvement`)
-3. Commit your changes (`git commit -am 'Add some improvement'`)
-4. Push to the branch (`git push origin feature/improvement`)
-5. Create a Pull Request
-
----
 
 ## License
 
