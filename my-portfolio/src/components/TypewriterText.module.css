@@ -1,23 +1,35 @@
-.typewriter {
-    font-size: 2rem;
-    font-weight: bold;
-    color: white;
-    font-family: 'Courier New', monospace;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 400;
 }
 
+.prefix {
+  color: rgba(99, 179, 255, 0.40);
+  user-select: none;
+}
+
+.text {
+  color: #63b3ff;
+  letter-spacing: 0.01em;
+}
+
+/* Slim block cursor */
 .cursor {
-    display: inline-block;
-    margin-left: 4px;
-    animation: blink 1s step-start infinite;
-    color: white;
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background: #63b3ff;
+  border-radius: 1px;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-start infinite;
 }
 
 @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}

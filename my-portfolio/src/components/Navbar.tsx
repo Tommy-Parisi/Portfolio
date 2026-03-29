@@ -1,57 +1,80 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './Navbar.module.css';
 
+const NAV_LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' },
+  { to: '/projects', label: 'Projects' },
+  { to: '/contact', label: 'Contact' },
+];
+
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const close = () => setIsOpen(false);
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.container}>
-        <Link to="/" className={styles.logo} onClick={closeMenu}>
-          <span className="header-text" style={{ fontSize: 'clamp(1.2rem, 4vw, 2.5rem)' }}>
+    <>
+      <nav className={styles.navbar}>
+        <div className={styles.container}>
+          <NavLink to="/" className={styles.logo} onClick={close}>
             THOMAS C PARISI
-          </span>
-        </Link>
-        
-        {/* Desktop Navigation */}
-        <div className={styles.links}>
-          <Link to="/" className={`${styles.link} header-text`} style={{ fontSize: '1.5rem' }}>Home</Link>
-          <Link to="/about" className={`${styles.link} header-text`} style={{ fontSize: '1.5rem' }}>About</Link>
-          <Link to="/projects" className={`${styles.link} header-text`} style={{ fontSize: '1.5rem' }}>Projects</Link>
-          <Link to="/contact" className={`${styles.link} header-text`} style={{ fontSize: '1.5rem' }}>Contact</Link>
-        </div>
+          </NavLink>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className={styles.menuButton} 
-          onClick={toggleMenu}
-          aria-label="Toggle navigation menu"
-        >
-          <span className={`${styles.hamburger} ${isMenuOpen ? styles.open : ''}`}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </button>
+          {/* Desktop links */}
+          <div className={styles.links}>
+            {NAV_LINKS.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === '/'}
+                className={({ isActive }) =>
+                  `${styles.link} ${isActive ? styles.linkActive : ''}`
+                }
+              >
+                {label}
+                <span className={styles.linkUnderline} />
+              </NavLink>
+            ))}
+          </div>
 
-        {/* Mobile Navigation */}
-        <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ''}`}>
-          <Link to="/" className={`${styles.mobileLink} header-text`} onClick={closeMenu}>Home</Link>
-          <Link to="/about" className={`${styles.mobileLink} header-text`} onClick={closeMenu}>About</Link>
-          <Link to="/projects" className={`${styles.mobileLink} header-text`} onClick={closeMenu}>Projects</Link>
-          <Link to="/contact" className={`${styles.mobileLink} header-text`} onClick={closeMenu}>Contact</Link>
+          {/* Hamburger */}
+          <button
+            className={styles.menuButton}
+            onClick={() => setIsOpen(prev => !prev)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isOpen}
+          >
+            <span className={`${styles.hamburger} ${isOpen ? styles.open : ''}`}>
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
         </div>
+      </nav>
+
+      {/* Mobile drawer */}
+      {isOpen && (
+        <div className={styles.backdrop} onClick={close} aria-hidden="true" />
+      )}
+      <div className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ''}`}>
+        {NAV_LINKS.map(({ to, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={to === '/'}
+            className={({ isActive }) =>
+              `${styles.drawerLink} ${isActive ? styles.drawerLinkActive : ''}`
+            }
+            onClick={close}
+          >
+            {label}
+          </NavLink>
+        ))}
       </div>
-    </nav>
+    </>
   );
 };
 

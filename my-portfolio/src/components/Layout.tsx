@@ -11,10 +11,10 @@ const Layout = ({ children, isNavbarVisible = true }: LayoutProps) => {
   return (
     <>
       {isNavbarVisible && <Navbar />}
-      <main style={{ padding: '2rem', maxWidth: '1500px', margin: '0 auto' }}>
+      <main style={{ position: 'relative', zIndex: 1 }}>
         {children}
       </main>
-      {<Footer />}
+      <Footer />
     </>
   );
 };
