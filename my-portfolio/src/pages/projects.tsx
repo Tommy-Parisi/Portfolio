@@ -167,6 +167,23 @@ const PROJECTS: Project[] = [
   },
 
   {
+    id: "commits-its",
+    title: "Clean Commits ITS — Git Intelligent Tutoring System",
+    subtitle: "React · Hono · TypeScript · SQLite",
+    description:
+      "An Intelligent Tutoring System that teaches Git literacy — reading `git status` output and writing imperative, well-scoped commit messages — driven by a per-student knowledge-tracing model.",
+    highlights: [
+      "Models two knowledge components (status reading, commit writing) with independent conceptual (Novice → Partial → Mastery) and procedural (0-100%) tracking per student",
+      "Gated hint ladder: each of three hint levels requires a prior incorrect attempt before unlocking, with a full reveal after continued misses",
+      "Misconception detection matches wrong answers against known error patterns to trigger targeted intervention cards",
+      "Adaptive question selection driven by live student model state rather than a fixed question order",
+      "Full-stack TypeScript monorepo (shared/backend/frontend workspaces) backed by SQLite, with a tested evaluation engine (Node's built-in test runner) covering hint, answer, and question-selection logic",
+    ],
+    tech: ["React", "TypeScript", "Hono", "Vite", "SQLite", "Node.js"],
+    year: 2026, complexity: 4,
+    links: [{ label: "GitHub", href: "https://github.com/Tommy-Parisi/BetterCommitsITS" }],
+  },
+  {
     id: "swapborn",
     title: "Swapborn — Death‑Swap Puzzle Platformer",
     subtitle: "Godot 4 · GDScript",
