@@ -1069,6 +1069,13 @@ const styles = `
   margin: 0;
 }
 
+.pm-partner {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: #6b7280;
+  margin: 8px 0 0;
+}
+
 .pm-section-label {
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 10px;
@@ -1128,12 +1135,10 @@ const styles = `
   .p-header, .p-controls, .p-tags, .p-footnote { padding-left: 1rem; padding-right: 1rem; }
 
   .pm {
-    grid-template-columns: 1fr;
-    grid-template-rows: 220px 1fr;
     max-height: 92vh;
     border-radius: 18px;
   }
-  .pm-visual { border-radius: 0; }
+  .pm-thumb { height: 190px; }
   .pm-body { padding: 1.25rem 1.25rem 1.75rem; }
 }
 `;
