@@ -14,6 +14,9 @@ const biasDetectorImage   = "/assets/bias_detector.png";
 const tradingBotImage      = "/assets/trading_bot.png";
 const canvasCalendarImage   = "/assets/canvas_calendar.png";
 const gotGuessrImage         = "/assets/gotguessr.png";
+const fortyHandsImage        = "/assets/fourtyHandsImage.png";
+const gitLogoImage           = "/assets/Git-logo.svg.webp";
+const caseByCaseImage        = "/assets/caseByCaseImage.png";
 
 // ----------------------------- Types ---------------------------------------
 
@@ -27,10 +30,13 @@ type Project = {
   highlights: string[];
   tech: string[];
   image?: string;
+  /** Render `image` contained on a light backing card instead of cropped full-bleed — for transparent-background logos/icons. */
+  imageIsLogo?: boolean;
   video?: string;
   year?: number;
   complexity?: number;
   links: Link[];
+  partner?: string;
 };
 
 // ------------------------ Project Data -------------------------------------
@@ -72,8 +78,50 @@ const PROJECTS: Project[] = [
   image: tradingBotImage,                                                                                                                            
   year: 2026,                                                                                                                                        
   complexity: 5,                                                                                                                                     
-  links: [{label: "GitHub", href: "https://github.com/Tommy-Parisi/PolymarketTradingBot"}],                                                                                                                                         
-  },        
+  links: [],
+  },
+  {
+    id: "forty-hands-kalshi-scalper",
+    title: "Kalshi Settlement Scalper",
+    subtitle: "Python · Kalshi API · Live Capital · Statistical Risk Controls",
+    description:
+      "A standalone live-trading system that executes a narrow, statistically-backtested strategy against real capital on Kalshi's short-window settlement markets. Built around a shadow-first rollout discipline: every strategy or sizing change is validated in dry-run mode against pre-registered acceptance criteria before it's trusted with real money.",
+    highlights: [
+      "Independent, per-asset executor processes with isolated state, logging, and capital limits, so a fault in one can't affect another",
+      "Shadow-mode validation gate — every live change must clear pre-registered statistical acceptance criteria in dry-run before being promoted to risk real capital",
+      "Layered real-time risk controls: daily loss halts, entry-rate caps, volatility guards, and risk-segmented position sizing, enforced independently of the strategy logic",
+      "Automated statistical decay monitoring compares live results against a backtested baseline with confidence intervals, flagging drift before it compounds into losses",
+      "Crash-safe state recovery — processes resume cleanly from their own trade logs after a restart with no duplicate or missed entries",
+      "Full operational tooling: systemd-managed services, a live PnL dashboard, and real-time alerting",
+    ],
+    tech: ["Python", "Kalshi API", "RSA-PSS Auth", "systemd", "JSONL", "Statistical Backtesting"],
+    image: fortyHandsImage,
+    year: 2026,
+    complexity: 4,
+    links: [],
+  },
+  {
+    id: "case-by-case",
+    title: "Case By Case",
+    subtitle: "TypeScript · Phaser 3 · Vite · Educational Game Design",
+    description:
+      "A courtroom-themed educational game that teaches software testing through the drama of a trial. You play a software attorney deciding whether a function is guilty of a bug — each case hands you the function's code, its stated purpose, and a pool of unit tests to select as evidence. Judge Compiler then delivers a verdict and explains what your chosen tests actually proved, turning test-selection into courtroom strategy. Built as a two-person team project with a shared educational game design document driving scope and mechanics.",
+    highlights: [
+      "Courtroom framing turns an abstract skill — picking effective unit tests — into a legible, replayable decision: build/select evidence, argue a verdict, get reasoned feedback",
+      "Judge Compiler feedback system explains, per selected test, what it did and didn't prove about the function's correctness, reinforcing branch-coverage thinking rather than just pass/fail",
+      "Custom pixel-art assets and an original Judge Compiler sprite sheet, hand-built and animated specifically for this game",
+      "Full original audio design — licensed and credited mus, verdict stamps, and win/lose states",
+      "Built collaboratively with a partner from an educational game design document (EGDD) through to a shipped, testable Phaser build",
+    ],
+    tech: ["TypeScript", "Phaser 3", "Vite", "Jest", "ESLint"],
+    image: caseByCaseImage,
+    year: 2026,
+    complexity: 3,
+    links: [
+      { label: "GitHub", href: "https://github.com/Tommy-Parisi/CaseByCase" },
+    ],
+    partner: "Hairum Qureshi",
+  },
   {
     id: "bias-detector",
     title: "BiasDetector — Media Bias Analysis Engine",
@@ -180,6 +228,8 @@ const PROJECTS: Project[] = [
       "Full-stack TypeScript monorepo (shared/backend/frontend workspaces) backed by SQLite, with a tested evaluation engine (Node's built-in test runner) covering hint, answer, and question-selection logic",
     ],
     tech: ["React", "TypeScript", "Hono", "Vite", "SQLite", "Node.js"],
+    image: gitLogoImage,
+    imageIsLogo: true,
     year: 2026, complexity: 4,
     links: [{ label: "GitHub", href: "https://github.com/Tommy-Parisi/BetterCommitsITS" }],
   },
@@ -437,7 +487,7 @@ const ProjectCard: React.FC<{ p: Project; index: number; onOpen: () => void }> =
     aria-label={`${p.title} — open details`}
     style={{ animationDelay: `${index * 60}ms` }}
   >
-    <div className="pc-media">
+    <div className={`pc-media${p.imageIsLogo ? ' pc-media--logo' : ''}`}>
       {p.image
         ? <img src={p.image} alt="" loading="lazy" />
         : <div className="pc-media-placeholder" aria-hidden />}
@@ -491,27 +541,26 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
       onClick={onClose}
     >
       <div className="pm" onClick={e => e.stopPropagation()}>
+        <button className="pm-close" onClick={onClose} aria-label="Close">✕</button>
 
-        {/* Left: visual panel */}
-        <div className="pm-visual">
-          {project.video
-            ? <video src={project.video} controls preload="none" className="pm-visual-media" />
-            : project.image
-              ? <img src={project.image} alt="Project preview" className="pm-visual-media" />
-              : <div className="pm-visual-placeholder" />}
-          <div className="pm-visual-gradient" />
-
-          {/* Overlaid title on the image */}
-          <div className="pm-visual-caption">
+        {/* Scrollable content */}
+        <div className="pm-body">
+          <div className="pm-heading">
             <h2 className="pm-title">{project.title}</h2>
             {project.subtitle && <p className="pm-sub">{project.subtitle}</p>}
           </div>
 
-          <button className="pm-close" onClick={onClose} aria-label="Close">✕</button>
-        </div>
+          {(project.video || project.image) && (
+            <div className={`pm-thumb${project.imageIsLogo ? ' pm-thumb--logo' : ''}`}>
+              {!project.imageIsLogo && !project.video && project.image && (
+                <div className="pm-thumb-backdrop" style={{ backgroundImage: `url(${project.image})` }} aria-hidden="true" />
+              )}
+              {project.video
+                ? <video src={project.video} controls preload="none" className="pm-thumb-media" />
+                : <img src={project.image} alt="" className="pm-thumb-media" />}
+            </div>
+          )}
 
-        {/* Right: scrollable content */}
-        <div className="pm-body">
           {/* Meta row */}
           <div className="pm-meta">
             {project.year && <span className="pm-badge">{project.year}</span>}
@@ -525,6 +574,7 @@ const ProjectModal: React.FC<{ project: Project; onClose: () => void }> = ({ pro
           </div>
 
           <p className="pm-desc">{project.description}</p>
+          {project.partner && <p className="pm-partner">Built with {project.partner}</p>}
 
           <section>
             <h4 className="pm-section-label">Highlights</h4>
@@ -725,7 +775,7 @@ const styles = `
 }
 
 .pc-media {
-  aspect-ratio: 16/9;
+  aspect-ratio: 3/2;
   background: #0c1017;
   overflow: hidden;
 }
@@ -733,6 +783,7 @@ const styles = `
 .pc-media img, .pc-media video {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -744,6 +795,20 @@ const styles = `
   background: repeating-linear-gradient(
     45deg, #0d1118, #0d1118 10px, #0b0e14 10px, #0b0e14 20px
   );
+}
+
+.pc-media--logo {
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14%;
+}
+
+.pc-media--logo img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .pc-body {
@@ -776,6 +841,10 @@ const styles = `
   color: rgba(232,236,242,0.65);
   line-height: 1.5;
   margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
 }
 
 .pc-chips {
@@ -830,12 +899,13 @@ const styles = `
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Modal panel — side-by-side on desktop */
+/* Modal panel — image on top, scrollable body below */
 .pm {
-  width: min(960px, 95vw);
+  width: min(1100px, 96vw);
   max-height: 88vh;
-  display: grid;
-  grid-template-columns: 42% 1fr;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background: rgba(8,10,15,0.97);
   backdrop-filter: blur(32px) saturate(180%);
   -webkit-backdrop-filter: blur(32px) saturate(180%);
@@ -851,54 +921,19 @@ const styles = `
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Left visual panel */
-.pm-visual {
-  position: relative;
-  overflow: hidden;
-  background: #060810;
-}
-
-.pm-visual-media {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.pm-visual-placeholder {
-  width: 100%; height: 100%;
-  background: repeating-linear-gradient(
-    45deg, #0d1118, #0d1118 10px, #0b0e14 10px, #0b0e14 20px
-  );
-}
-
-/* Gradient that fades the image into the caption */
-.pm-visual-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.15) 0%,
-    rgba(0,0,0,0.02) 40%,
-    rgba(6,8,16,0.75) 72%,
-    rgba(6,8,16,0.97) 100%
-  );
-}
-
-/* Title/subtitle overlaid on image bottom */
-.pm-visual-caption {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 1.25rem 1.5rem 1.5rem;
+.pm-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .pm-title {
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
   font-weight: 700;
   color: #e8ecf2;
-  margin: 0 0 4px;
+  margin: 0;
   line-height: 1.25;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
 }
 
 .pm-sub {
@@ -908,12 +943,57 @@ const styles = `
   margin: 0;
 }
 
-/* Close button — top-left of visual */
+/* Inset image — a uniform-size frame for every project. The full image is always shown
+   uncropped and centered; a blurred copy of the same image fills the leftover space so
+   there's never a hard "letterbox bar", just a soft ambient frame. */
+.pm-thumb {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 260px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+  margin-top: 4px;
+  background: #0c1017;
+}
+
+.pm-thumb-backdrop {
+  position: absolute;
+  inset: -24px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(30px) brightness(0.45) saturate(1.15);
+  transform: scale(1.15);
+}
+
+.pm-thumb-media {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  border-radius: 6px;
+}
+
+.pm-thumb--logo {
+  background: #f5f5f5;
+  padding: 22px;
+}
+
+/* Close button — fixed to the modal corner, always reachable while the body scrolls */
 .pm-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(0,0,0,0.55);
+  top: 14px;
+  right: 14px;
+  background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.12);
   color: #9aa3b2;
   border-radius: 8px;
@@ -931,8 +1011,10 @@ const styles = `
   color: #e8ecf2;
 }
 
-/* Right scrollable body */
+/* Scrollable body */
 .pm-body {
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   padding: 1.75rem 1.75rem 2rem;
   display: flex;
