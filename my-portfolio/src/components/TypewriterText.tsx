@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./TypewriterText.module.css";
 
-const words = ["Computer Science", "AI & Robotics", "Cybersecurity"];
+const words = ["Implementation Consulting", "AI & Robotics", "Cybersecurity"];
 const TYPING_SPEED  = 120;
 const DELETING_SPEED = 50;
 const PAUSE_TIME    = 1800;
