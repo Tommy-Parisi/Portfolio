@@ -168,20 +168,23 @@ const Skills: React.FC = () => {
     <section className="ab-section" aria-label="Skills" ref={ref as React.RefObject<HTMLElement>}>
       <h2 className="ab-section-title fade-up">Skills</h2>
       <div className="ab-skill-grid">
-        <SkillColumn index={0} title="Languages, Frameworks & Libraries" items={[
-          "TypeScript","Python","C/C++","Java","SQL","GDScript",
+        <SkillColumn index={0} title="Consulting & Delivery" items={[
+          "Requirement Gathering","Consulting","Testing","Documentation","Technical Language Translation",
+        ]} />
+        <SkillColumn index={1} title="Languages, Frameworks & Libraries" items={[
+          "TypeScript","Python","C/C++","C#","Java","SQL","Visual Basic","GDScript",
           "React/Vite","Node.js","Svelte","Tauri","Godot 4","OpenCV",
         ]} />
-        <SkillColumn index={1} title="AI/ML & Data" items={[
+        <SkillColumn index={2} title="AI/ML & Data" items={[
           "Embeddings & NLP","Recommender Systems","Collaborative Filtering",
           "Computer Vision","Deep Learning","Image Segmentation",
           "Stereo Vision (Disparity Mapping)","Pandas/NumPy","ETL",
         ]} />
-        <SkillColumn index={2} title="Systems & Platforms" items={[
+        <SkillColumn index={3} title="Systems & Platforms" items={[
           "Docker","Linux Server Admin","Nginx","Self-Hosting",
           "Tailscale VPN","System Hardening (UFW, SSH Keys)","Git/GitHub","CI/CD Basics",
         ]} />
-        <SkillColumn index={3} title="Cybersecurity & Research" items={[
+        <SkillColumn index={4} title="Cybersecurity & Research" items={[
           "CAPTCHA Automation & Robustness","Adversarial Testing","Secure Configurations",
           "Network Security","Observability","Experiment Design","Academic Research Collaboration",
         ]} />
@@ -209,6 +212,21 @@ const Timeline: React.FC = () => {
       <h2 className="ab-section-title fade-up">Path So Far</h2>
       <ol className="ab-timeline">
         {[
+          {
+            year: "2026",
+            content: (
+              <>
+                <strong>FAST Enterprises</strong> — Started as an Implementation Consultant in August 2026,
+                working on the Georgia Driver and Vehicle Services project.
+                <br /><br />
+                <strong>Kalshi Settlement Scalper</strong> — Built and launched a live-trading system on
+                Kalshi's short-window settlement markets, with shadow-mode validation and layered risk controls.
+                <br /><br />
+                <strong>University of Delaware</strong> — Graduated in May 2026 with a BS in Computer Science,
+                AI &amp; Robotics concentration, Cybersecurity minor.
+              </>
+            ),
+          },
           {
             year: "2025",
             content: (
