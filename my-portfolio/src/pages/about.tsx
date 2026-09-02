@@ -51,10 +51,10 @@ const Hero: React.FC = () => {
           <span className="ab-eyebrow">About Me</span>
           <h2 className="ab-hero-name">Thomas Parisi</h2>
           <p className="ab-hero-tagline">
-            I am a Senior studying Computer Science at The University of Delaware — AI &amp; Robotics
-            concentration, Cybersecurity minor. From Syracuse, NY. Open to relocating — Philadelphia,
-            Chicago, NYC, or Syracuse are all appealing. My dream is to work as a Game Developer or
-            Software Engineer for whoever I can help.
+            I graduated from The University of Delaware with a BS in Computer Science — AI &amp; Robotics
+            concentration, Cybersecurity minor. I am now an Implementation Consultant at FAST Enterprises,
+            and am currently working on the Georgia Driver and Vehicle Services project. I was born and raised in Syracuse, NY.
+            I am not currently looking for work but my dream is to continue working as a Technical Consultant or Software Engineer.
           </p>
           <div className="ab-hero-cta">
             <a className="btn-solid" href="/resume.pdf" target="_blank" rel="noreferrer">
@@ -110,44 +110,22 @@ const Highlights: React.FC = () => {
       <div className="ab-cards">
         <HighlightCard
           index={0}
-          title="Security Exception System — AI‑Assisted Risk Assessment"
-          subtitle="React + Python · Gemini API · Pinecone RAG"
+          title="Georgia Driver and Vehicle Services"
+          subtitle="Implementation Consultant · FAST Enterprises"
           bullets={[
-            "Deterministic risk scoring with LLM‑generated narratives and policy citations",
-            "RAG pipeline with semantic search over UD security policies (300× faster via local caching)",
-            "Dual interface: guided chatbot for users + decision support tool for IT analysts",
+            "Gather and translate business requirements from state stakeholders into system configuration",
+            "Configure and test system functionality against state-specific policy and legal requirements",
+            "Document processes and system behavior, bridging technical implementation and end-user understanding",
           ]}
-          links={[{ label: "GitHub", href: "https://github.com/Tommy-Parisi/ExemptionRequestClassifier" }]}
         />
         <HighlightCard
           index={1}
-          title="BiasDetector — Media Bias Analysis Engine"
-          subtitle="C++17 · NLP Pipeline · Design Patterns"
+          title="Kalshi Settlement Scalper"
+          subtitle="Python · Kalshi API · Live Capital"
           bullets={[
-            "4 independent bias signals (sentiment, framing, emotion) via Strategy pattern ensemble",
-            "Full NLP pipeline: tokenization, sentence splitting, NER, sentiment analysis",
-            "Algorithmic confidence scoring based on signal agreement and data sufficiency",
-          ]}
-          links={[{ label: "GitHub", href: "https://github.com/Tommy-Parisi/bias-detector" }]}
-        />
-        <HighlightCard
-          index={2}
-          title="Self-Hosted Home Server"
-          subtitle="Ubuntu · Tailscale · Docker · Jellyfin"
-          bullets={[
-            "Host personal portfolio website with custom domain on Ubuntu server",
-            "Configured Tailscale VPN, UFW, and key-based SSH for secure remote access",
-            "Deployed Dockerized Jellyfin media server for streaming and media management",
-          ]}
-        />
-        <HighlightCard
-          index={3}
-          title="Current Coursework"
-          subtitle="Networks · Cybersecurity · Machine Learning · System Hardening"
-          bullets={[
-            "Study networks, protocols, and end-to-end communication analysis",
-            "Explore reverse engineering and penetration testing to identify vulnerabilities",
-            "Apply system hardening and protection strategies to secure environments",
+            "Live-trading system executing a statistically-backtested strategy on Kalshi's short-window settlement markets",
+            "Shadow-mode validation gate — changes must clear pre-registered acceptance criteria in dry-run before risking capital",
+            "Layered real-time risk controls: daily loss halts, entry-rate caps, volatility guards, and position sizing",
           ]}
         />
       </div>
