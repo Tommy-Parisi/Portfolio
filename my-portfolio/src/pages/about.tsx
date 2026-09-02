@@ -293,8 +293,7 @@ const CTA: React.FC = () => {
       <div className="ab-cta glass-card fade-up">
         <h2 className="ab-cta-title">Let's build something great</h2>
         <p className="ab-muted">
-          Open to Software Engineering internships and new-grad roles where I can ship product,
-          own reliability, and apply ML thoughtfully.
+          I am always looking for opportunities in side projects &amp; open source collaboration.
         </p>
         <div className="ab-row">
           <a className="btn-solid" href="mailto:tcparisi55@gmail.com">Get in touch</a>
@@ -516,11 +515,12 @@ const styles = `
 /* Skills */
 .ab-skill-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 14px;
 }
 
-@media (max-width: 1024px) { .ab-skill-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1300px) { .ab-skill-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px)  { .ab-skill-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px)  { .ab-skill-grid { grid-template-columns: 1fr; } }
 
 .ab-skill-col {
