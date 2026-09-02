@@ -19,12 +19,12 @@ export default function Home() {
         </p>
 
         <p className="home-bio">
-          I am a Senior at the University of Delaware studying Computer Science
-          with a concentration in Artificial Intelligence and Robotics
-          and a Minor in Cybersecurity. I am a passionate full-stack developer with
-          a wide range of expertise. Please take a look around at all of my projects
-          and experience. If you have any questions, check out the contact page and
-          send me a message!
+          I am an Implementation Consultant at FAST Enterprises, working on the
+          Georgia Driver and Vehicle Services project. I graduated from the
+          University of Delaware with a BS in Computer Science, concentrating in
+          Artificial Intelligence and Robotics with a Minor in Cybersecurity. Please
+          take a look around at all of my projects and experience. If you have any
+          questions, check out the contact page and send me a message!
         </p>
 
         <div className="home-cta">
